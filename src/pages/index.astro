@@ -7,12 +7,29 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const latest = posts.slice(0, 4);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Closed Loop',
+  url: Astro.site?.href,
+  description:
+    'AI engineering, evidenced — agentic systems, Claude Code, and AI infrastructure.',
+  author: {
+    '@type': 'Person',
+    name: 'Damian',
+    jobTitle: 'Senior AI Engineer',
+    email: 'djsystems@proton.me',
+    address: { '@type': 'PostalAddress', addressLocality: 'Sheffield', addressCountry: 'GB' },
+  },
+};
 ---
 
 <Base
   title="Closed Loop — AI engineering, evidenced"
   description="Senior AI engineer writing about agentic systems, Claude Code, and AI infrastructure. Every article is a system that actually ran — scars with documentation."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <section class="hero container">
     <p class="eyebrow">AI Engineering · Agentic Systems · Sheffield, UK</p>
     <h1>Systems that close their own loop.</h1>

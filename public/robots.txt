@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://closed-loop.djsystems.workers.dev/sitemap-index.xml
+
+# AI-readable index
+# llms.txt: https://closed-loop.djsystems.workers.dev/llms.txt
