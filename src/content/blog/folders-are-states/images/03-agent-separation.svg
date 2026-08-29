@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 480" width="940" height="480" role="img" aria-label="Three subagents with different tool grants: a writer with full tools, a reviewer restricted to read-only tools so it cannot edit or run anything, and a checker that boots the real app and returns screenshot evidence.">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+  </defs>
+  <rect width="940" height="480" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+
+    <!-- orchestrator -->
+    <rect x="40" y="36" width="860" height="58" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+    <text x="470" y="60" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">The orchestrating loop — a Claude Code skill</text>
+    <text x="470" y="80" font-size="12" fill="#475569" text-anchor="middle">spawns each subagent with a scoped brief; keeps the heavy codebase reasoning out of its own context</text>
+
+    <!-- spawn arrows -->
+    <g stroke="#475569" stroke-width="1.5">
+      <line x1="170" y1="94" x2="170" y2="144" marker-end="url(#arr)"/>
+      <line x1="470" y1="94" x2="470" y2="144" marker-end="url(#arr)"/>
+      <line x1="770" y1="94" x2="770" y2="144" marker-end="url(#arr)"/>
+    </g>
+    <text x="482" y="126" font-size="11.5" fill="#475569">spawns</text>
+
+    <!-- agent boxes -->
+    <rect x="40"  y="150" width="260" height="190" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+    <rect x="340" y="150" width="260" height="190" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+    <rect x="640" y="150" width="260" height="190" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+
+    <g font-size="16" font-weight="bold" fill="#0f172a">
+      <text x="56" y="180">Writer</text>
+      <text x="356" y="180">Reviewer</text>
+      <text x="656" y="180">Checker</text>
+    </g>
+    <g font-size="12" fill="#334155">
+      <text x="56" y="204">implements one task on an</text>
+      <text x="56" y="220">isolated branch (own worktree)</text>
+      <text x="356" y="204">reviews the diff against the</text>
+      <text x="356" y="220">brief — never its own code</text>
+      <text x="656" y="204">boots the real app and proves</text>
+      <text x="656" y="220">the promised behaviour</text>
+    </g>
+    <g font-size="11" font-weight="bold" fill="#64748b">
+      <text x="56" y="250">TOOLS</text>
+      <text x="356" y="250">TOOLS</text>
+      <text x="656" y="250">TOOLS</text>
+    </g>
+    <g font-size="12.5" font-family="Menlo, Consolas, monospace">
+      <text x="56" y="272" fill="#16a34a">Read ✓  Grep ✓  Glob ✓</text>
+      <text x="56" y="292" fill="#16a34a">Edit ✓  Write ✓  Bash ✓</text>
+      <text x="356" y="272" fill="#16a34a">Read ✓  Grep ✓  Glob ✓</text>
+      <text x="356" y="292" fill="#dc2626" text-decoration="line-through">Edit ✗  Write ✗  Bash ✗</text>
+      <text x="656" y="272" fill="#16a34a">Bash ✓  browser ✓</text>
+      <text x="656" y="292" fill="#16a34a">Read ✓  Write ✓</text>
+    </g>
+    <g font-size="11" font-style="italic" fill="#475569">
+      <text x="356" y="316">read-only by capability,</text>
+      <text x="356" y="330">not by instruction</text>
+      <text x="656" y="316">trusts only what it can</text>
+      <text x="656" y="330">see running</text>
+      <text x="56" y="316">gets the base's error counts</text>
+      <text x="56" y="330">handed to it in the prompt</text>
+    </g>
+
+    <!-- flow between agents -->
+    <g stroke="#475569" stroke-width="1.5">
+      <line x1="302" y1="245" x2="334" y2="245" marker-end="url(#arr)"/>
+      <line x1="602" y1="245" x2="634" y2="245" marker-end="url(#arr)"/>
+    </g>
+    <text x="318" y="237" font-size="11" fill="#475569" text-anchor="middle">diff</text>
+    <text x="618" y="237" font-size="11" fill="#475569" text-anchor="middle">branch</text>
+
+    <!-- outputs -->
+    <g stroke="#475569" stroke-width="1.5">
+      <line x1="170" y1="340" x2="170" y2="372" marker-end="url(#arr)"/>
+      <line x1="470" y1="340" x2="470" y2="372" marker-end="url(#arr)"/>
+      <line x1="770" y1="340" x2="770" y2="372" marker-end="url(#arr)"/>
+    </g>
+    <g>
+      <rect x="40"  y="378" width="260" height="52" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <rect x="340" y="378" width="260" height="52" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <rect x="640" y="378" width="260" height="52" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-dasharray="5 4" stroke-width="1.5"/>
+    </g>
+    <g font-size="12" fill="#334155" text-anchor="middle">
+      <text x="170" y="399">a committed branch +</text>
+      <text x="170" y="415">base-vs-head verification numbers</text>
+      <text x="470" y="399">findings: clean / mechanical /</text>
+      <text x="470" y="415">judgement-level (flagged, not fixed)</text>
+      <text x="770" y="399">PASS · FAIL · NO-UI-SURFACE</text>
+      <text x="770" y="415">+ screenshot evidence</text>
+    </g>
+
+    <text x="470" y="462" font-size="12.5" font-style="italic" fill="#475569" text-anchor="middle">Three separate contexts: the writer never reviews its own work; the reviewer physically cannot edit; the checker only reports what it saw.</text>
+  </g>
+</svg>

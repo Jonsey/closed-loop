@@ -1,0 +1,9 @@
+---
+interface Props {
+  tag: string;
+  link?: boolean;
+}
+const { tag, link = true } = Astro.props;
+---
+
+{link ? <a class="tag-pill" href={`/tags/${tag}/`}>{tag}</a> : <span class="tag-pill">{tag}</span>}

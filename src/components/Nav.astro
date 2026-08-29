@@ -1,0 +1,69 @@
+---
+const links = [
+  { href: '/blog/', label: 'Writing' },
+  { href: '/about/', label: 'About' },
+  { href: '/services/', label: 'Services' },
+];
+const path = Astro.url.pathname;
+---
+
+<header>
+  <div class="container inner">
+    <a class="wordmark" href="/">
+      <svg class="glyph" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M 12 3 a 9 9 0 1 1 -8.6 6.3" />
+        <path d="M 1 7 l 2.4 2.6 L 6.2 7.4" />
+      </svg>
+      Closed Loop
+    </a>
+    <nav>
+      {links.map((l) => (
+        <a href={l.href} class:list={{ active: path.startsWith(l.href) }}>{l.label}</a>
+      ))}
+      <a href="/rss.xml" aria-label="RSS feed" class="rss">RSS</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.9rem;
+    gap: 1rem;
+  }
+  .wordmark {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-strong);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+  .wordmark:hover { text-decoration: none; color: var(--accent); }
+  .glyph { color: var(--accent); flex-shrink: 0; }
+  nav {
+    display: flex;
+    gap: 1.1rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+  }
+  nav a { color: var(--muted); }
+  nav a:hover, nav a.active { color: var(--text-strong); text-decoration: none; }
+  .rss { color: var(--accent-dim); }
+  @media (max-width: 480px) {
+    nav { gap: 0.8rem; font-size: 0.88rem; }
+    .wordmark { font-size: 1.05rem; }
+  }
+</style>

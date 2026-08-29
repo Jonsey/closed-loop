@@ -1,0 +1,54 @@
+---
+import Base from './Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import TagPill from '../components/TagPill.astro';
+
+interface Props {
+  post: any;
+}
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags } = post.data;
+---
+
+<Base title={`${title} — Closed Loop`} description={description} ogType="article">
+  <article class="prose-shell">
+    <header class="post-header">
+      <p class="meta">
+        <FormattedDate date={pubDate} />
+        {updatedDate && <> · updated <FormattedDate date={updatedDate} /></>}
+      </p>
+      <h1>{title}</h1>
+      <p class="description">{description}</p>
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((t: string) => <TagPill tag={t} />)}
+        </div>
+      )}
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-header {
+    margin-block: 3rem 3.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+  .post-header h1 { margin-block: 0.5rem 0.9rem; }
+  .description {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1.15rem;
+    margin-block: 0;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.2rem;
+  }
+  article { padding-bottom: 3rem; }
+</style>

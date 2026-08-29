@@ -1,17 +1,76 @@
 ---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
 
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const latest = posts.slice(0, 4);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Closed Loop — AI engineering, evidenced"
+  description="Senior AI engineer writing about agentic systems, Claude Code, and AI infrastructure. Every article is a system that actually ran — scars with documentation."
+>
+  <section class="hero container">
+    <p class="eyebrow">AI Engineering · Agentic Systems · Sheffield, UK</p>
+    <h1>Systems that close their own loop.</h1>
+    <p class="lede">
+      I'm Damian — a senior software engineer building production AI systems: autonomous
+      dev loops on Claude Code, multi-agent pipelines, and the cloud infrastructure
+      underneath them. Everything here ran for real before it got written up.
+      No thought experiments — <em>scars with documentation</em>.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="/blog/">Read the writing</a>
+      <a class="btn" href="/services/">Work with me</a>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>Latest writing</h2>
+    <div class="grid">
+      {latest.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: 5rem 3rem;
+    max-width: 52rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    margin-block: 0.75rem 1.25rem;
+  }
+  .lede {
+    font-size: 1.2rem;
+    max-width: 42rem;
+    color: var(--text);
+  }
+  .cta { display: flex; gap: 0.9rem; margin-top: 2rem; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    padding: 0.6rem 1.3rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    color: var(--text-strong);
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent-dim); }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #14100b;
+  }
+  .btn.primary:hover { background: var(--accent-dim); border-color: var(--accent-dim); }
+  section.container h2 { margin-block: 2rem 1.2rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: 1rem;
+    padding-bottom: 2rem;
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import TagPill from './TagPill.astro';
+
+interface Props {
+  post: any;
+}
+const { post } = Astro.props;
+---
+
+<a class="post-card" href={`/blog/${post.id}/`}>
+  <span class="meta"><FormattedDate date={post.data.pubDate} /></span>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  {post.data.tags.length > 0 && (
+    <div class="tags">
+      {post.data.tags.map((t: string) => <TagPill tag={t} link={false} />)}
+    </div>
+  )}
+</a>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+</style>

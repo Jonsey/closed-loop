@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" width="940" height="430" role="img" aria-label="Two verification strategies compared: trusting exit codes fails every branch when trunk already has errors; measuring the base first and comparing counts passes when head equals base and fails only on new errors.">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+  </defs>
+  <rect width="940" height="430" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+
+    <text x="245" y="42" font-size="16" font-weight="bold" fill="#dc2626" text-anchor="middle">✗  Trusting the exit code</text>
+    <text x="695" y="42" font-size="16" font-weight="bold" fill="#16a34a" text-anchor="middle">✓  Comparing against the base</text>
+
+    <rect x="30" y="56" width="430" height="344" rx="10" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5"/>
+    <rect x="480" y="56" width="430" height="344" rx="10" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
+
+    <!-- left panel -->
+    <rect x="60" y="80" width="370" height="54" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="76" y="102" font-size="13.5" font-weight="bold" fill="#0f172a">trunk (the base)</text>
+    <text x="76" y="121" font-size="12" fill="#475569">already carries 77 type errors — trunks are dirty</text>
+
+    <line x1="245" y1="134" x2="245" y2="162" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="60" y="168" width="370" height="54" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="76" y="190" font-size="13.5" font-weight="bold" fill="#0f172a">the agent's branch</text>
+    <text x="76" y="209" font-size="12" fill="#475569">a correct change — still 77 errors, none of them new</text>
+
+    <line x1="245" y1="222" x2="245" y2="250" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="60" y="256" width="370" height="54" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="76" y="278" font-size="13.5" font-weight="bold" fill="#dc2626" font-family="Menlo, Consolas, monospace">tsc exits 1  →  verdict: FAIL</text>
+    <text x="76" y="297" font-size="12" fill="#7f1d1d">the exit code can't tell old errors from new ones</text>
+
+    <text x="245" y="348" font-size="12" font-style="italic" fill="#7f1d1d" text-anchor="middle">every branch parks at verify-failed —</text>
+    <text x="245" y="366" font-size="12" font-style="italic" fill="#7f1d1d" text-anchor="middle">the loop can never go green on a dirty trunk</text>
+
+    <!-- right panel -->
+    <rect x="510" y="80" width="370" height="54" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="526" y="102" font-size="13.5" font-weight="bold" fill="#0f172a">1 · measure the base first: 77 errors</text>
+    <text x="526" y="121" font-size="12" fill="#475569">before the writer runs — the only moment it's free</text>
+
+    <line x1="695" y1="134" x2="695" y2="162" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="510" y="168" width="370" height="54" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="526" y="190" font-size="13.5" font-weight="bold" fill="#0f172a">2 · the writer agent makes the change</text>
+    <text x="526" y="209" font-size="12" fill="#475569">with the baseline numbers handed to it in the prompt</text>
+
+    <g stroke="#475569" stroke-width="1.5">
+      <line x1="640" y1="222" x2="600 " y2="250" marker-end="url(#arr)"/>
+      <line x1="750" y1="222" x2="790" y2="250" marker-end="url(#arr)"/>
+    </g>
+    <text x="695" y="243" font-size="11.5" fill="#475569" text-anchor="middle">3 · re-measure at head</text>
+
+    <rect x="510" y="256" width="175" height="66" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="597" y="282" font-size="13.5" font-weight="bold" fill="#15803d" text-anchor="middle" font-family="Menlo, Consolas, monospace">head: 77</text>
+    <text x="597" y="304" font-size="12" fill="#166534" text-anchor="middle">BASE == HEAD → green</text>
+
+    <rect x="705" y="256" width="175" height="66" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="792" y="282" font-size="13.5" font-weight="bold" fill="#dc2626" text-anchor="middle" font-family="Menlo, Consolas, monospace">head: 79</text>
+    <text x="792" y="304" font-size="12" fill="#7f1d1d" text-anchor="middle">+2 new → real failure</text>
+
+    <text x="695" y="348" font-size="12" font-style="italic" fill="#166534" text-anchor="middle">the auditable sentence in every digest:</text>
+    <text x="695" y="366" font-size="12" font-style="italic" fill="#166534" text-anchor="middle">“77 at base, 77 with the change”</text>
+  </g>
+</svg>

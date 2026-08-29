@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Services — Closed Loop"
+  description="Freelance AI engineering: agentic system design and build, Claude Code enablement for teams, and AI infrastructure consulting."
+>
+  <section class="prose-shell">
+    <p class="eyebrow" style="margin-top: 3rem;">Services</p>
+    <h1>Hire me</h1>
+    <p class="lede">
+      I take remote freelance engagements building production AI systems. Everything
+      I sell is something I already run myself — the articles on this site are the
+      evidence.
+    </p>
+
+    <div class="offer">
+      <h2>Agentic system design &amp; build</h2>
+      <p>
+        Autonomous task loops, multi-agent pipelines, and background workers that
+        produce reviewed, evidenced output — not chat transcripts. Designed with hard
+        gates, verification baselines, and human-in-the-loop control surfaces.
+      </p>
+      <p class="evidence">Evidence: <a href="/blog/folders-are-states/">Folders Are States — an autonomous dev loop on Claude Code</a></p>
+    </div>
+
+    <div class="offer">
+      <h2>Claude Code enablement for teams</h2>
+      <p>
+        Get an engineering team from chat-window usage to structured agentic
+        workflows: skills, subagents, review separation, CI-safe verification, and
+        the operating rules that keep autonomous coding safe on a production codebase.
+      </p>
+      <p class="evidence">Evidence: the verification and separation-of-duties patterns in the writing here.</p>
+    </div>
+
+    <div class="offer">
+      <h2>AI infrastructure consulting</h2>
+      <p>
+        Architecture and delivery for LLM-backed products: RAG pipelines, evaluation
+        harnesses, cloud AI services, and the unglamorous plumbing — cost control,
+        observability, and failure handling — that makes them production-grade.
+      </p>
+      <p class="evidence">Evidence: production delivery pedigree in regulated iGaming, plus the systems documented here.</p>
+    </div>
+
+    <p class="contact">
+      <a class="btn primary" href="mailto:damian@amrsoftware.com?subject=AI%20engineering%20enquiry">Email me — damian@amrsoftware.com</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .lede { font-size: 1.15rem; max-width: 42rem; }
+  .offer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    margin-block: 1.5rem;
+  }
+  .offer h2 { margin-block: 0 0.6rem; font-size: 1.3rem; }
+  .offer p { margin-block: 0.5rem; }
+  .evidence { font-family: var(--font-heading); font-size: 0.88rem; color: var(--muted); }
+  .contact { margin-block: 2.5rem 3rem; }
+  .btn {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+  }
+  .btn.primary { background: var(--accent); color: #14100b; }
+  .btn.primary:hover { background: var(--accent-dim); text-decoration: none; }
+</style>
