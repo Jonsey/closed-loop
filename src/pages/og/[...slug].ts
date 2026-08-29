@@ -3,9 +3,16 @@ import { OGImageRoute } from 'astro-og-canvas';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 
-const pages = Object.fromEntries(
+const pages: Record<string, { title: string; description: string; logo?: boolean }> = Object.fromEntries(
   posts.map((post) => [post.id, { title: post.data.title, description: post.data.description }])
 );
+
+pages['default'] = {
+  title: 'Closed Loop',
+  description:
+    'AI engineering, evidenced.\nAgentic systems · Claude Code · AI infrastructure',
+  logo: true,
+};
 
 export const { getStaticPaths, GET } = await OGImageRoute({
   pages,
@@ -13,6 +20,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page: (typeof pages)[string]) => ({
     title: page.title,
     description: page.description,
+    ...(page.logo && { logo: { path: './src/assets/og-logo.png', size: [140] } }),
     bgGradient: [[14, 17, 22]],
     border: { color: [240, 136, 62], width: 14, side: 'inline-start' },
     padding: 72,
