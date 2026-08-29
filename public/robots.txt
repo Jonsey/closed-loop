@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://closed-loop.djsystems.workers.dev/sitemap-index.xml
+Sitemap: https://closed-loop.dev/sitemap-index.xml
 
 # AI-readable index
-# llms.txt: https://closed-loop.djsystems.workers.dev/llms.txt
+# llms.txt: https://closed-loop.dev/llms.txt
