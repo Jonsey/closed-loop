@@ -4,26 +4,29 @@ import TagPill from './TagPill.astro';
 
 interface Props {
   post: any;
+  index?: number;
 }
-const { post } = Astro.props;
+const { post, index } = Astro.props;
+const n = index !== undefined ? String(index + 1).padStart(2, '0') : null;
 ---
 
 <a class="post-card" href={`/blog/${post.id}/`}>
-  <span class="meta"><FormattedDate date={post.data.pubDate} /></span>
-  <h3>{post.data.title}</h3>
-  <p>{post.data.description}</p>
-  {post.data.tags.length > 0 && (
-    <div class="tags">
-      {post.data.tags.map((t: string) => <TagPill tag={t} link={false} />)}
-    </div>
-  )}
+  {n && <span class="index">{n}</span>}
+  <div>
+    <span class="meta"><FormattedDate date={post.data.pubDate} /></span>
+    <h3>{post.data.title}</h3>
+    <p>{post.data.description}</p>
+    {post.data.tags.length > 0 && (
+      <div class="tags">
+        {post.data.tags.map((t: string) => <TagPill tag={t} link={false} />)}
+      </div>
+    )}
+  </div>
+  <svg class="go" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 17 17 7M8 7h9v9" />
+  </svg>
 </a>
 
 <style>
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.8rem;
-  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
 </style>

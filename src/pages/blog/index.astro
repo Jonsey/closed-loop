@@ -13,24 +13,23 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   description="Long-form articles on agentic systems, Claude Code, and AI infrastructure — from systems that actually ran."
 >
   <section class="container">
-    <p class="eyebrow" style="margin-top: 3rem;">Writing</p>
-    <h1>Articles</h1>
-    <p class="intro">
-      Long-form, evidence-first write-ups of AI systems in production: what was built,
-      what broke, and the rule each failure produced.
-    </p>
+    <div class="head">
+      <p class="eyebrow" data-reveal>Writing</p>
+      <h1 data-reveal style="--i:1">Articles</h1>
+      <p class="intro" data-reveal style="--i:2">
+        Long-form, evidence-first write-ups of the AI systems Closed Loop builds and
+        runs: what was built, what broke, and the rule each failure produced.
+      </p>
+    </div>
     <div class="list">
-      {posts.map((post) => <PostCard post={post} />)}
+      {posts.map((post, i) => <div data-reveal style={`--i:${Math.min(i, 5)}`}><PostCard post={post} index={i} /></div>)}
     </div>
   </section>
 </Base>
 
 <style>
-  .intro { max-width: 42rem; color: var(--muted); }
-  .list {
-    display: grid;
-    gap: 1rem;
-    max-width: 46rem;
-    margin-block: 2.5rem 3rem;
-  }
+  .head { padding-block: clamp(3rem, 8vh, 5.5rem) 1rem; }
+  .head h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); margin-block: 1rem 1rem; }
+  .intro { max-width: 42rem; color: var(--muted); margin: 0; }
+  .list { display: grid; margin-block: 2.5rem 3rem; }
 </style>

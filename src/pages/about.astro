@@ -1,45 +1,103 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const facts = [
+  ['What', 'AI engineering consultancy'],
+  ['Where', 'Sheffield, UK — remote engagements'],
+  ['Who', 'Damian — senior software engineer, many years in the industry'],
+  ['Security', 'CosmWasm / Go audit work, paid bounty findings'],
+  ['Stack', 'Claude Code · Python · Go · TypeScript · cloud AI services'],
+];
 ---
 
 <Base
   title="About — Closed Loop"
-  description="Damian — senior AI engineer in Sheffield, UK. Agentic systems, Claude Code, regulated-industry delivery, and end-to-end system building."
+  description="Closed Loop is an AI engineering consultancy in Sheffield, UK, run by a senior software engineer with many years in the industry. Agentic systems, Claude Code, and end-to-end system building."
 >
-  <article class="prose-shell prose">
-    <p class="eyebrow" style="margin-top: 3rem;">About</p>
-    <h1>Hello, I'm Damian.</h1>
-    <p>
-      I'm a senior software engineer in Sheffield, UK, currently building free-to-play
-      iGaming products for clients like DraftKings — full solutions delivered on
-      three-week cycles in a regulated industry. Alongside that, I build and run
-      production AI systems: autonomous development loops on Claude Code, multi-agent
-      audit pipelines for Web3 security work, and a personal-assistant harness that
-      manages a real life — calendars, finances, health tracking, memory — through
-      plain files and scheduled agents.
+  <section class="container top">
+    <div class="intro">
+      <p class="eyebrow" data-reveal>About</p>
+      <h1 data-reveal style="--i:1">What Closed Loop is.</h1>
+      <p class="lede" data-reveal style="--i:2">
+        Closed Loop is an AI engineering consultancy. It designs, builds and hands
+        over production AI systems — autonomous development loops, multi-agent
+        pipelines, and the infrastructure underneath them — for businesses that
+        need the output to be verified, not just impressive.
+      </p>
+    </div>
+    <dl class="facts" data-reveal="left" style="--i:2">
+      {facts.map(([k, v]) => (
+        <div><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  </section>
+
+  <article class="prose-shell prose body">
+    <p data-reveal>
+      The name is the method. An open loop is a prompt in and text out with nobody
+      checking. A closed loop feeds its own output back through a gate — verified,
+      reviewed, recorded — before it is allowed to count. Every system Closed Loop
+      ships is built that way, and every rule in it came from a failure that was
+      documented rather than hidden.
     </p>
-    <h2>What this site is</h2>
-    <p>
-      Closed Loop is where those systems get written up properly. Each article is a
-      working system explained from the inside: the architecture, the gates, and —
-      most importantly — the failures. Nearly every rule in a good agentic system is
-      a scar with documentation, and the articles keep the scars attached.
+    <h2 data-reveal>How the work is done</h2>
+    <p data-reveal>
+      State in plain files, so anyone — human or agent — can read the truth.
+      Verification by evidence rather than assertion. Separation of duties enforced
+      by capability, not by prompts. The articles on this site are those methods
+      written up from the inside: the architecture, the gates, and the scars.
     </p>
-    <p>
-      It's a learning resource for engineers building with LLMs, and a portfolio of
-      how I work: state in plain files, verification by evidence rather than
-      assertion, and separation of duties enforced by capability, not prompts.
+    <h2 data-reveal>The engineer behind it</h2>
+    <p data-reveal>
+      Closed Loop is run by Damian, a senior software engineer in Sheffield with
+      many years of experience shipping production software in demanding, regulated
+      industries. Alongside client work he builds and runs his own AI systems:
+      autonomous development loops on Claude Code, multi-agent audit pipelines for
+      Web3 security work, and a personal-assistant harness that manages a real
+      life — calendars, finances, health, memory — through plain files and
+      scheduled agents.
     </p>
-    <h2>Background</h2>
     <ul>
-      <li><strong>AI engineering</strong> — agentic loops, multi-agent orchestration, Claude Code skills/subagents, RAG pipelines, evaluation.</li>
-      <li><strong>Production delivery</strong> — senior engineer at an iGaming company shipping for DraftKings and Caesars; remote contracts across iGaming and fintech.</li>
-      <li><strong>Web3 security</strong> — CosmWasm/Golang audit work with a custom multi-agent auditing system; paid bounty findings.</li>
-      <li><strong>Systems from scratch</strong> — I once designed and built an award-winning five-barrel microbrewery from raw materials, control electronics included. Whole-system thinking is the throughline.</li>
+      <li data-reveal style="--i:0"><strong>AI engineering</strong> — agentic loops, multi-agent orchestration, Claude Code skills/subagents, RAG pipelines, evaluation.</li>
+      <li data-reveal style="--i:1"><strong>Production delivery</strong> — many years delivering full products on short cycles; remote contracts across regulated industries and fintech.</li>
+      <li data-reveal style="--i:2"><strong>Web3 security</strong> — CosmWasm/Golang audit work with a custom multi-agent auditing system; paid bounty findings.</li>
+      <li data-reveal style="--i:3"><strong>Systems from scratch</strong> — once designed and built an award-winning five-barrel microbrewery from raw materials, control electronics included. Whole-system thinking is the throughline.</li>
     </ul>
-    <p>
+    <p data-reveal>
       Want to work together? See <a href="/services/">services</a>, or email
       <a href="mailto:djsystems@proton.me">djsystems@proton.me</a>.
     </p>
   </article>
 </Base>
+<style>
+  .top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+    gap: 3rem;
+    align-items: end;
+    padding-block: clamp(3rem, 8vh, 5.5rem) 2rem;
+  }
+  .top h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); margin-block: 1rem 1.25rem; }
+  .lede { font-size: 1.15rem; margin: 0; max-width: 40rem; }
+  .facts {
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .facts div:first-child { border-top: 0; }
+  .facts dt { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); padding-top: 0.25rem; }
+  .facts dd { margin: 0; font-family: var(--font-heading); color: var(--text-strong); }
+  .body { padding-block: 1rem 2rem; }
+  .body h2 { margin-block: 2rem 0.6rem; }
+  @media (max-width: 860px) { .top { grid-template-columns: 1fr; } }
+</style>

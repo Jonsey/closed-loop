@@ -1,76 +1,155 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const offers = [
+  {
+    n: '01',
+    title: 'Agentic system design & build',
+    body: 'Autonomous task loops, multi-agent pipelines, and background workers that produce reviewed, evidenced output — not chat transcripts. Designed with hard gates, verification baselines, and human-in-the-loop control surfaces.',
+    evidence: { label: 'Folders Are States — an autonomous dev loop on Claude Code', href: '/blog/folders-are-states/' },
+    fit: 'Teams with a backlog that could be worked overnight, if only the output could be trusted.',
+  },
+  {
+    n: '02',
+    title: 'Claude Code enablement for teams',
+    body: 'Get an engineering team from chat-window usage to structured agentic workflows: skills, subagents, review separation, CI-safe verification, and the operating rules that keep autonomous coding safe on a production codebase.',
+    evidence: { label: 'The verification and separation-of-duties patterns in the writing here', href: '/blog/' },
+    fit: 'Engineering leads who have the tool licence and not yet the operating model.',
+  },
+  {
+    n: '03',
+    title: 'AI infrastructure consulting',
+    body: 'Architecture and delivery for LLM-backed products: RAG pipelines, evaluation harnesses, cloud AI services, and the unglamorous plumbing — cost control, observability, failure handling — that makes them production-grade.',
+    evidence: { label: 'Many years of production delivery in regulated industries, plus the systems documented here', href: '/about/' },
+    fit: 'Products past the prototype, where the next bug is a customer-facing one.',
+  },
+];
+
+const how = [
+  ['Scope', 'A short call, then a written brief with the gate criteria — what "done" will be measured against.'],
+  ['Build', 'Remote, in your repo, on a branch. Daily written updates; nothing merged without your review.'],
+  ['Evidence', 'Every deliverable ships with its verification: test runs, baselines, and the operating rules for keeping it running.'],
+  ['Hand over', 'Documented so your team runs it without us. That is the point of a closed loop.'],
+];
 ---
 
 <Base
   title="Services — Closed Loop"
-  description="Freelance AI engineering: agentic system design and build, Claude Code enablement for teams, and AI infrastructure consulting."
+  description="Closed Loop services: agentic system design and build, Claude Code enablement for teams, and AI infrastructure consulting."
 >
-  <section class="prose-shell">
-    <p class="eyebrow" style="margin-top: 3rem;">Services</p>
-    <h1>Hire me</h1>
-    <p class="lede">
-      I take remote freelance engagements building production AI systems. Everything
-      I sell is something I already run myself — the articles on this site are the
-      evidence.
+  <section class="container head">
+    <p class="eyebrow" data-reveal>Services</p>
+    <h1 data-reveal style="--i:1">Everything we sell,<br />we already run.</h1>
+    <p class="lede" data-reveal style="--i:2">
+      Closed Loop takes remote engagements building production AI systems. The
+      articles on this site aren't marketing — they're the evidence, and the same
+      rules apply to your codebase.
     </p>
+  </section>
 
-    <div class="offer">
-      <h2>Agentic system design &amp; build</h2>
-      <p>
-        Autonomous task loops, multi-agent pipelines, and background workers that
-        produce reviewed, evidenced output — not chat transcripts. Designed with hard
-        gates, verification baselines, and human-in-the-loop control surfaces.
-      </p>
-      <p class="evidence">Evidence: <a href="/blog/folders-are-states/">Folders Are States — an autonomous dev loop on Claude Code</a></p>
+  <section class="container offers">
+    {offers.map((o, i) => (
+      <article class="offer" data-reveal style={`--i:${i % 3}`}>
+        <div class="left">
+          <span class="n">{o.n}</span>
+          <h2>{o.title}</h2>
+        </div>
+        <div class="right">
+          <p>{o.body}</p>
+          <p class="fit"><span>Good fit:</span> {o.fit}</p>
+          <p class="evidence">Evidence — <a href={o.evidence.href}>{o.evidence.label}</a></p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="container how">
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">How an engagement runs</p>
+        <h2>Four stages. A gate between each.</h2>
+      </div>
     </div>
+    <ol class="steps">
+      {how.map(([t, d], i) => (
+        <li data-reveal style={`--i:${i}`}>
+          <span class="step-n">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3>{t}</h3>
+            <p>{d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
 
-    <div class="offer">
-      <h2>Claude Code enablement for teams</h2>
-      <p>
-        Get an engineering team from chat-window usage to structured agentic
-        workflows: skills, subagents, review separation, CI-safe verification, and
-        the operating rules that keep autonomous coding safe on a production codebase.
-      </p>
-      <p class="evidence">Evidence: the verification and separation-of-duties patterns in the writing here.</p>
+  <section class="container contact" data-reveal>
+    <div class="card">
+      <div>
+        <p class="eyebrow">Get in touch</p>
+        <h2>Tell me what has to be right.</h2>
+        <p class="sub">One email, a rough scope, and you'll get a straight answer on whether Closed Loop is the right fit — including when it isn't.</p>
+      </div>
+      <a class="btn primary" href="mailto:djsystems@proton.me?subject=AI%20engineering%20enquiry">djsystems@proton.me <span class="arrow">→</span></a>
     </div>
-
-    <div class="offer">
-      <h2>AI infrastructure consulting</h2>
-      <p>
-        Architecture and delivery for LLM-backed products: RAG pipelines, evaluation
-        harnesses, cloud AI services, and the unglamorous plumbing — cost control,
-        observability, and failure handling — that makes them production-grade.
-      </p>
-      <p class="evidence">Evidence: production delivery pedigree in regulated iGaming, plus the systems documented here.</p>
-    </div>
-
-    <p class="contact">
-      <a class="btn primary" href="mailto:djsystems@proton.me?subject=AI%20engineering%20enquiry">Email me — djsystems@proton.me</a>
-    </p>
   </section>
 </Base>
 
 <style>
-  .lede { font-size: 1.15rem; max-width: 42rem; }
+  .head { padding-block: clamp(3rem, 8vh, 5.5rem) 1rem; max-width: var(--wide); }
+  .head h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); margin-block: 1rem 1.25rem; }
+  .lede { font-size: 1.2rem; max-width: 42rem; margin: 0; }
+
+  .offers { padding-block: 2.5rem 1rem; }
   .offer {
-    background: var(--surface);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 2rem 3rem;
+    padding-block: 2.5rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .offer:last-child { border-bottom: 1px solid var(--border); }
+  .offer::before {
+    content: ''; position: absolute; left: 0; top: -1px; width: 100%; height: 1px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .offer:hover::before { transform: scaleX(1); }
+  .n { font-family: var(--font-mono); color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; }
+  .offer h2 { margin: 0.6rem 0 0; font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+  .right p { margin: 0 0 1rem; }
+  .fit { font-family: var(--font-heading); font-size: 0.95rem; color: var(--text); }
+  .fit span { color: var(--accent); }
+  .evidence { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+
+  .how { padding-block: clamp(3.5rem, 7vw, 5.5rem) 1rem; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .steps li { display: grid; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border-strong); }
+  .step-n { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
+  .steps h3 { margin: 0.3rem 0 0.4rem; font-size: 1.15rem; }
+  .steps p { margin: 0; color: var(--muted); font-size: 0.98rem; line-height: 1.6; }
+
+  .contact { padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+  .card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: clamp(1.75rem, 4vw, 3rem);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.5rem 1.75rem;
-    margin-block: 1.5rem;
+    border-radius: 12px;
+    background:
+      radial-gradient(50% 100% at 0% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+      var(--surface);
   }
-  .offer h2 { margin-block: 0 0.6rem; font-size: 1.3rem; }
-  .offer p { margin-block: 0.5rem; }
-  .evidence { font-family: var(--font-heading); font-size: 0.88rem; color: var(--muted); }
-  .contact { margin-block: 2.5rem 3rem; }
-  .btn {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    display: inline-block;
-    padding: 0.7rem 1.4rem;
-    border-radius: 8px;
+  .card h2 { margin: 0.5rem 0 0.75rem; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .sub { margin: 0; color: var(--muted); max-width: 40ch; }
+
+  @media (max-width: 860px) {
+    .offer { grid-template-columns: 1fr; gap: 1rem; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .card { grid-template-columns: 1fr; }
   }
-  .btn.primary { background: var(--accent); color: #14100b; }
-  .btn.primary:hover { background: var(--accent-dim); text-decoration: none; }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
 </style>

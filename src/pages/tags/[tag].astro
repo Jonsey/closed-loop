@@ -22,19 +22,18 @@ const { posts } = Astro.props;
 
 <Base title={`#${tag} — Closed Loop`} description={`Articles tagged ${tag}.`}>
   <section class="container">
-    <p class="eyebrow" style="margin-top: 3rem;">Tag</p>
-    <h1>#{tag}</h1>
+    <div class="head">
+      <p class="eyebrow" data-reveal>Tag</p>
+      <h1 data-reveal style="--i:1">#{tag}</h1>
+    </div>
     <div class="list">
-      {posts.map((post) => <PostCard post={post} />)}
+      {posts.map((post, i) => <div data-reveal style={`--i:${Math.min(i, 5)}`}><PostCard post={post} index={i} /></div>)}
     </div>
   </section>
 </Base>
 
 <style>
-  .list {
-    display: grid;
-    gap: 1rem;
-    max-width: 46rem;
-    margin-block: 2.5rem 3rem;
-  }
+  .head { padding-block: clamp(3rem, 8vh, 5.5rem) 1rem; }
+  .head h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); margin-block: 1rem 0; }
+  .list { display: grid; margin-block: 2.5rem 3rem; }
 </style>

@@ -7,6 +7,7 @@ import '@fontsource/source-serif-4/400-italic.css';
 import '@fontsource/source-serif-4/600.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
@@ -16,6 +17,7 @@ interface Props {
   ogType?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  progress?: boolean;
 }
 
 const {
@@ -24,6 +26,7 @@ const {
   ogType = 'website',
   ogImage: ogImagePath = '/og/default.png',
   ogImageAlt = 'Closed Loop — AI engineering, evidenced',
+  progress = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(ogImagePath, Astro.site);
@@ -50,19 +53,23 @@ const ogImage = new URL(ogImagePath, Astro.site);
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content="Closed Loop" />
-    <meta name="theme-color" content="#0e1116" />
+    <meta name="theme-color" content="#0b0e13" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
+    <ClientRouter />
     <slot name="head" />
   </head>
   <body>
+    <div class="backdrop" aria-hidden="true"></div>
+    {progress && <div class="progress" aria-hidden="true"></div>}
     <Nav />
     <main>
       <slot />
     </main>
     <Footer />
+    <script src="../scripts/motion.ts"></script>
   </body>
 </html>

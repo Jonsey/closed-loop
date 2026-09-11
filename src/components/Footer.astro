@@ -3,29 +3,76 @@ const year = new Date().getFullYear();
 ---
 
 <footer>
-  <div class="container inner">
-    <span>© {year} Closed Loop — Damian, Sheffield UK</span>
-    <span class="links">
-      <a href="/rss.xml">RSS</a>
-      <a href="mailto:djsystems@proton.me">Email</a>
-    </span>
+  <div class="container top">
+    <div class="brand">
+      <p class="eyebrow">Closed Loop</p>
+      <p class="line">AI systems that close their own loop.<br />Built, verified, handed over.</p>
+    </div>
+    <div class="cols">
+      <div>
+        <p class="head">Site</p>
+        <a href="/blog/">Writing</a>
+        <a href="/about/">About</a>
+        <a href="/services/">Services</a>
+      </div>
+      <div>
+        <p class="head">Elsewhere</p>
+        <a href="/rss.xml">RSS</a>
+        <a href="/llms.txt">llms.txt</a>
+        <a href="mailto:djsystems@proton.me">Email</a>
+      </div>
+    </div>
+  </div>
+  <div class="container bottom">
+    <span>© {year} Closed Loop — AI engineering, Sheffield, UK</span>
+    <span class="mono">Astro · static · no trackers</span>
   </div>
 </footer>
 
 <style>
   footer {
     border-top: 1px solid var(--border);
-    margin-top: 5rem;
+    margin-top: 6rem;
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--surface) 60%, transparent));
   }
-  .inner {
+  .top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    padding-block: 3rem 2rem;
+  }
+  .line {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    color: var(--text-strong);
+    line-height: 1.3;
+    margin: 0.75rem 0 0;
+    letter-spacing: -0.01em;
+  }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .cols a {
+    display: block;
+    color: var(--muted);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    padding-block: 0.2rem;
+    transition: color 0.2s, transform 0.25s var(--ease-out);
+  }
+  .cols a:hover { color: var(--text-strong); text-decoration: none; transform: translateX(3px); }
+  .head { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin: 0 0 0.6rem; }
+  .bottom {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-block: 1.5rem;
+    padding-block: 1.25rem 1.75rem;
+    border-top: 1px solid var(--border);
     font-family: var(--font-heading);
     font-size: 0.85rem;
     color: var(--muted);
   }
-  .links { display: flex; gap: 1rem; }
+  .mono { font-family: var(--font-mono); font-size: 0.75rem; }
+  @media (max-width: 640px) {
+    .top { grid-template-columns: 1fr; }
+  }
 </style>

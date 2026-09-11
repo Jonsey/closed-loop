@@ -3,10 +3,20 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="404 — Closed Loop" description="Page not found.">
-  <section class="container" style="padding-block: 6rem; text-align: center;">
-    <p class="eyebrow">404</p>
-    <h1>Open loop detected.</h1>
-    <p style="color: var(--muted);">This page doesn't exist. Let's close the loop:</p>
-    <p><a href="/">Home</a> · <a href="/blog/">Writing</a></p>
+  <section class="container wrap">
+    <p class="eyebrow" data-reveal>404</p>
+    <h1 data-reveal style="--i:1">Open loop detected.</h1>
+    <p data-reveal style="--i:2">This page doesn't exist. Let's close the loop:</p>
+    <div class="cta" data-reveal style="--i:3">
+      <a class="btn primary" href="/">Home</a>
+      <a class="btn" href="/blog/">Writing</a>
+    </div>
   </section>
 </Base>
+
+<style>
+  .wrap { padding-block: clamp(5rem, 15vh, 10rem); }
+  .wrap h1 { font-size: clamp(2.4rem, 6vw, 4rem); margin-block: 1rem; }
+  .wrap p { color: var(--muted); margin: 0; }
+  .cta { display: flex; gap: 0.9rem; margin-top: 2rem; }
+</style>
