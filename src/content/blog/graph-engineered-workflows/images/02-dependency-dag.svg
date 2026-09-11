@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" width="780" height="420" role="img" aria-label="The dependency DAG: task C depends on B, B depends on A. All three are expanded in parallel; C's branch is cut from B's branch at a recorded SHA; C waits at blocked-dependency inside 1-outstanding until B is ready.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+  </defs>
+  <rect width="780" height="420" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="30" font-size="14" font-weight="bold" fill="#0f172a">One field, three behaviours: depends_on</text>
+
+    <!-- task nodes -->
+    <g font-family="Menlo, Consolas, monospace" font-size="11">
+      <rect x="40" y="60" width="225" height="92" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+      <text x="52" y="80" fill="#0f172a" font-weight="bold">task A</text>
+      <text x="52" y="98" fill="#334155">loop_stage: ready</text>
+      <text x="52" y="114" fill="#334155">loop_branch: feature/a</text>
+      <text x="52" y="130" fill="#334155">loop_base_sha: 3f9c2ae (main)</text>
+
+      <rect x="278" y="60" width="225" height="92" rx="8" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+      <text x="290" y="80" fill="#0f172a" font-weight="bold">task B</text>
+      <text x="290" y="98" fill="#334155">depends_on: [a]</text>
+      <text x="290" y="114" fill="#334155">loop_stage: branched</text>
+      <text x="290" y="130" fill="#334155">loop_base_sha: 91be0d4 (feat/a)</text>
+
+      <rect x="516" y="60" width="225" height="92" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="528" y="80" fill="#0f172a" font-weight="bold">task C</text>
+      <text x="528" y="98" fill="#334155">depends_on: [b]</text>
+      <text x="528" y="114" fill="#1e40af" font-weight="bold">loop_stage: blocked-dependency</text>
+      <text x="528" y="130" fill="#334155">still in 1-outstanding/ — prompted</text>
+    </g>
+    <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#a)">
+      <path d="M278,106 L267,106"/>
+      <path d="M516,106 L505,106"/>
+    </g>
+    <text x="272" y="90" font-size="9" text-anchor="middle" fill="#475569">needs</text>
+    <text x="510" y="90" font-size="9" text-anchor="middle" fill="#475569">needs</text>
+
+    <!-- three behaviours -->
+    <g font-size="12" fill="#334155">
+      <rect x="40" y="180" width="220" height="110" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="52" y="202" font-weight="bold" fill="#0f172a">1 · Ordering</text>
+      <text x="52" y="222">Topological sort every tick.</text>
+      <text x="52" y="238">On a cycle: block both ends,</text>
+      <text x="52" y="254">never guess.</text>
+      <text x="52" y="278" font-family="Menlo, Consolas, monospace" font-size="11">A → B → C</text>
+
+      <rect x="280" y="180" width="220" height="110" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="292" y="202" font-weight="bold" fill="#0f172a">2 · Base resolution</text>
+      <text x="292" y="222">base_branch → dependency's</text>
+      <text x="292" y="238">branch → main. Resolved to a</text>
+      <text x="292" y="254">SHA, recorded in the file:</text>
+      <text x="292" y="278" font-family="Menlo, Consolas, monospace" font-size="11">branch names move under you</text>
+
+      <rect x="520" y="180" width="220" height="110" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="532" y="202" font-weight="bold" fill="#0f172a">3 · Gate SEND only</text>
+      <text x="532" y="222">Expansion runs for all three in</text>
+      <text x="532" y="238">parallel. Only the code-writing</text>
+      <text x="532" y="254">step waits — so C is fully</text>
+      <text x="532" y="270">briefed the moment B lands.</text>
+    </g>
+
+    <!-- git graph strip -->
+    <g>
+      <text x="40" y="326" font-size="12" font-weight="bold" fill="#0f172a">Branches stack, not fork from main</text>
+      <line x1="60" y1="360" x2="720" y2="360" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="120" cy="360" r="6" fill="#475569"/><text x="120" y="385" font-size="11" text-anchor="middle" fill="#475569" font-family="Menlo, Consolas, monospace">main @3f9c2ae</text>
+      <path d="M120,360 C160,360 170,340 210,340 L330,340" stroke="#475569" stroke-width="2" fill="none"/>
+      <circle cx="330" cy="340" r="6" fill="#475569"/><text x="330" y="330" font-size="11" text-anchor="middle" fill="#475569" font-family="Menlo, Consolas, monospace">feature/a @91be0d4</text>
+      <path d="M330,340 C370,340 380,320 420,320 L540,320" stroke="#475569" stroke-width="2" fill="none"/>
+      <circle cx="540" cy="320" r="6" fill="#475569"/><text x="540" y="310" font-size="11" text-anchor="middle" fill="#475569" font-family="Menlo, Consolas, monospace">feature/b</text>
+      <path d="M540,320 C570,320 580,300 610,300 L690,300" stroke="#2563eb" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#aB)"/>
+      <text x="700" y="304" font-size="11" fill="#2563eb" font-family="Menlo, Consolas, monospace">feature/c</text>
+      <text x="612" y="292" font-size="10" fill="#2563eb">waits</text>
+    </g>
+    <text x="40" y="408" font-size="11" fill="#64748b">A dependency-blocked task never lands in 7-blocked/: that folder is reserved for decisions only a human can make.</text>
+  </g>
+</svg>

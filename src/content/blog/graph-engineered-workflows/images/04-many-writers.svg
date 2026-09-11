@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 500" width="780" height="500" role="img" aria-label="Five writers around one task file: the loop's tick, the web console, a per-task chat agent, a note app with drag and drop, and the engineer's editor. Each arrow carries the guard that keeps the writers from clobbering each other.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+  </defs>
+  <rect width="780" height="500" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- the file, centre -->
+    <rect x="290" y="190" width="200" height="120" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <g font-family="Menlo, Consolas, monospace" font-size="11" fill="#0f172a">
+      <text x="302" y="212" font-weight="bold">7-blocked/list-refresh.md</text>
+      <text x="302" y="232" fill="#334155">status: blocked</text>
+      <text x="302" y="247" fill="#334155">loop_stage: blocked-ambiguity</text>
+      <text x="302" y="262" fill="#334155">loop_branch: feature/list-…</text>
+      <text x="302" y="282" fill="#b45309">3. 🚩 Should a refresh keep…</text>
+      <text x="302" y="297" fill="#64748b">mtime 11:29:07</text>
+    </g>
+
+    <!-- writers -->
+    <g font-size="12">
+      <!-- loop -->
+      <rect x="40" y="40" width="190" height="60" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="135" y="64" text-anchor="middle" fill="#0f172a" font-weight="bold">the loop's tick</text>
+      <text x="135" y="82" text-anchor="middle" fill="#334155" font-size="11">every 3–120 min, or on file change</text>
+      <!-- console -->
+      <rect x="550" y="40" width="190" height="60" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+      <text x="645" y="64" text-anchor="middle" fill="#0f172a" font-weight="bold">web console</text>
+      <text x="645" y="82" text-anchor="middle" fill="#334155">drag, answer, reopen, park</text>
+      <!-- chat agent -->
+      <rect x="550" y="400" width="190" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="645" y="424" text-anchor="middle" fill="#0f172a" font-weight="bold">per-task chat agent</text>
+      <text x="645" y="442" text-anchor="middle" fill="#334155">no shell, no file creation, no git</text>
+      <!-- note app -->
+      <rect x="40" y="400" width="190" height="60" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="135" y="424" text-anchor="middle" fill="#0f172a" font-weight="bold">note app / file explorer</text>
+      <text x="135" y="442" text-anchor="middle" fill="#334155" font-size="11">drag between folders = state change</text>
+      <!-- editor -->
+      <rect x="40" y="220" width="190" height="60" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="135" y="244" text-anchor="middle" fill="#0f172a" font-weight="bold">your editor</text>
+      <text x="135" y="262" text-anchor="middle" fill="#334155">any text you like, any time</text>
+    </g>
+
+    <!-- arrows -->
+    <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#a)" marker-start="url(#a)">
+      <path d="M215,100 L300,190"/>
+      <path d="M565,100 L480,190"/>
+      <path d="M565,400 L480,310"/>
+      <path d="M215,400 L300,310"/>
+      <path d="M230,250 L290,250"/>
+    </g>
+
+    <!-- guards -->
+    <g font-size="10.5" fill="#334155">
+      <rect x="40" y="118" width="230" height="70" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="48" y="134" font-weight="bold" fill="#0f172a">guards on the loop</text>
+      <text x="48" y="149">• re-read before write-back; your answer wins</text>
+      <text x="48" y="163">• splice owned sections, never rewrite the file</text>
+      <text x="48" y="177">• set fields outright, never replace old values</text>
+
+      <rect x="510" y="118" width="230" height="70" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="518" y="134" font-weight="bold" fill="#0f172a">guards on the console</text>
+      <text x="518" y="149">• if_mtime on every write → 409 on conflict</text>
+      <text x="518" y="163">• per-file lock + atomic write</text>
+      <text x="518" y="177">• shared transition table refuses bad drops</text>
+
+      <rect x="510" y="320" width="230" height="70" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="518" y="336" font-weight="bold" fill="#0f172a">guards on the chat agent</text>
+      <text x="518" y="351">• may edit only its own task file</text>
+      <text x="518" y="365">• cannot move folders or touch git</text>
+      <text x="518" y="379">• the loop picks the edit up next tick</text>
+
+      <rect x="40" y="320" width="230" height="70" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="48" y="336" font-weight="bold" fill="#0f172a">reconciliation everyone owes</text>
+      <text x="48" y="351">• folder wins over status / loop_stage</text>
+      <text x="48" y="365">• answer present but no ✅ → stamp the marker</text>
+      <text x="48" y="379">• has a branch → changes-requested, not expanded</text>
+    </g>
+
+    <text x="390" y="484" font-size="11" text-anchor="middle" fill="#64748b">The file is the API. No tool may say "don't touch the state while I'm running" — so every reader is also a reconciler.</text>
+  </g>
+</svg>

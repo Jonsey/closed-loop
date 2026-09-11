@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 720" width="780" height="720" role="img" aria-label="The state graph: nine folder nodes coloured by owner, the happy path down the left, blocking edges into 7-blocked, reopen edges back into 1-outstanding, each edge labelled with who fires it.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker>
+    <marker id="aV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker>
+  </defs>
+  <rect width="780" height="720" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <g font-size="12" fill="#334155">
+      <rect x="40" y="10" width="13" height="13" rx="3" fill="#dbeafe" stroke="#2563eb"/><text x="59" y="21">node owned by the loop</text>
+      <rect x="215" y="10" width="13" height="13" rx="3" fill="#fef3c7" stroke="#d97706"/><text x="234" y="21">owned by you</text>
+      <rect x="335" y="10" width="13" height="13" rx="3" fill="#ede9fe" stroke="#7c3aed"/><text x="354" y="21">owned by the team</text>
+      <rect x="485" y="10" width="13" height="13" rx="3" fill="#dcfce7" stroke="#16a34a"/><text x="504" y="21">done</text>
+      <rect x="560" y="10" width="13" height="13" rx="3" fill="#f1f5f9" stroke="#94a3b8"/><text x="579" y="21">parked / dropped</text>
+    </g>
+
+    <!-- nodes: x=60 w=200. y: 1@50(h70) 2@170 3@270 4@370 5@470 6@570 ; each h44 except node1 -->
+    <g font-size="13" font-family="Menlo, Consolas, monospace">
+      <rect x="60" y="50" width="200" height="70" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="160" y="74" text-anchor="middle" fill="#0f172a">1-outstanding/</text>
+      <text x="160" y="94" text-anchor="middle" fill="#1e40af" font-size="9">captured · expanded · prompted</text>
+      <text x="160" y="108" text-anchor="middle" fill="#1e40af" font-size="8.5">blocked-dependency · changes-requested</text>
+      <rect x="60" y="170" width="200" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="160" y="197" text-anchor="middle" fill="#0f172a">2-branched/</text>
+      <rect x="60" y="270" width="200" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/><text x="160" y="297" text-anchor="middle" fill="#0f172a">3-checking/</text>
+      <rect x="60" y="370" width="200" height="44" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="160" y="397" text-anchor="middle" fill="#0f172a">4-ready/</text>
+      <rect x="60" y="470" width="200" height="44" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/><text x="160" y="497" text-anchor="middle" fill="#0f172a">5-in-review/</text>
+      <rect x="60" y="570" width="200" height="44" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><text x="160" y="597" text-anchor="middle" fill="#0f172a">6-complete/</text>
+      <rect x="520" y="300" width="200" height="44" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="620" y="327" text-anchor="middle" fill="#0f172a">7-blocked/</text>
+      <rect x="520" y="500" width="200" height="44" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/><text x="620" y="527" text-anchor="middle" fill="#0f172a">8-paused/</text>
+      <rect x="520" y="570" width="200" height="44" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/><text x="620" y="597" text-anchor="middle" fill="#0f172a">9-abandoned/</text>
+    </g>
+
+    <!-- happy path edges + labels at each arrow's midpoint -->
+    <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#a)">
+      <path d="M160,120 L160,168"/>
+      <path d="M160,214 L160,268"/>
+      <path d="M160,314 L160,368"/>
+      <path d="M160,414 L160,468"/>
+      <path d="M160,514 L160,568"/>
+    </g>
+    <g font-size="11" fill="#475569">
+      <text x="170" y="148">loop · ladder matches baseline, reviewer clean</text>
+      <text x="170" y="245">loop · claim-first: mv + stamp, then spawn</text>
+      <text x="170" y="345">checker · screenshots hashed, or "no UI surface"</text>
+      <text x="170" y="445" fill="#b45309" font-weight="bold">you drag it · loop pushes + opens the PR</text>
+      <text x="170" y="545">loop · PR state reads MERGED (never a local ancestor check)</text>
+    </g>
+
+    <!-- blocking edge into 7-blocked (from node 1 right edge, top) -->
+    <path d="M260,66 C420,66 560,150 610,298" stroke="#dc2626" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#aR)"/>
+    <text x="455" y="60" font-size="11" fill="#dc2626">loop · any 🚩 open, swept every tick</text>
+    <text x="455" y="74" font-size="11" fill="#dc2626">or verify-failed / check-failed</text>
+
+    <!-- reopen: 7-blocked back to node 1 (right edge, lower) -->
+    <path d="M520,322 C440,322 330,220 262,108" stroke="#b45309" stroke-width="1.6" fill="none" marker-end="url(#aA)"/>
+    <text x="400" y="272" font-size="11" fill="#b45309" font-weight="bold">you answer a question → outstanding</text>
+    <text x="400" y="286" font-size="11" fill="#b45309">(has a branch? stage = changes-requested)</text>
+
+    <!-- changes-requested from in-review: right of column, up to node 1 -->
+    <path d="M260,492 C330,492 340,420 340,300 C340,200 330,120 262,90" stroke="#7c3aed" stroke-width="1.6" fill="none" stroke-dasharray="2 4" marker-end="url(#aV)"/>
+    <text x="352" y="470" font-size="11" fill="#7c3aed">loop · verified defect in a PR comment</text>
+    <text x="352" y="484" font-size="11" fill="#7c3aed">→ changes-requested (seen_comments ledger)</text>
+
+    <!-- paused / abandoned -->
+    <path d="M620,344 L620,498" stroke="#94a3b8" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+    <text x="628" y="425" font-size="11" fill="#64748b">human only</text>
+    <path d="M620,544 L620,568" stroke="#94a3b8" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+
+    <g font-size="11" fill="#334155">
+      <text x="60" y="660">The loop never merges and never completes a task by itself — the only automatic entry into 6-complete is a merge it can verify.</text>
+      <text x="60" y="678">3-checking holds at most one file. blocked-dependency stays inside 1-outstanding: it is not a question for a human.</text>
+      <text x="60" y="696">Every edge has a named traverser and a guard. Dragging in the console or a note app fires the same edges as the loop's tick.</text>
+    </g>
+  </g>
+</svg>
