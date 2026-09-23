@@ -1,6 +1,6 @@
 ---
 const year = new Date().getFullYear();
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
+import { TURNSTILE_SITE_KEY as siteKey } from '../config';
 ---
 
 <footer>

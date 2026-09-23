@@ -4,17 +4,15 @@
  * verifies Turnstile and sends the message through Resend. The mailto stays as a
  * visible fallback — a form that fails silently is worse than no form.
  *
- * PUBLIC_TURNSTILE_SITE_KEY is a build-time env var; the default is Cloudflare's
- * always-passes test key so local builds work without an account.
+ * The Turnstile site key comes from src/config.ts (public; env override for local dev).
  */
+import { TURNSTILE_SITE_KEY as siteKey, CONTACT_EMAIL as fallback } from '../config';
 interface Props { heading?: string; sub?: string; compact?: boolean }
 const {
   heading = 'Tell us what has to be right.',
   sub = 'What is hurting, roughly what it costs you, and how to reach you. You get a straight answer on whether Closed Loop is the right fit — including when it isn’t.',
   compact = false,
 } = Astro.props;
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
-const fallback = 'hello@closed-loop.dev';
 ---
 
 <div class:list={['contact-card', { compact }]} id="contact">
