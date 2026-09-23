@@ -33,7 +33,7 @@ const jsonLd = {
   name: 'Closed Loop',
   url: Astro.site?.href,
   description: 'AI engineering consultancy — agentic systems, Claude Code enablement, and AI infrastructure, evidenced.',
-  email: 'djsystems@proton.me',
+  email: 'hello@closed-loop.dev',
   address: { '@type': 'PostalAddress', addressLocality: 'Sheffield', addressCountry: 'GB' },
   areaServed: 'Remote',
   founder: { '@type': 'Person', name: 'Damian', jobTitle: 'Senior AI Engineer' },
@@ -61,7 +61,7 @@ const jsonLd = {
         <em>scars with documentation</em>.
       </p>
       <div class="cta" data-reveal style="--i:3">
-        <a class="btn primary" href="/services/">Work with me <span class="arrow">→</span></a>
+        <a class="btn primary" href="/services/">Work with us <span class="arrow">→</span></a>
         <a class="btn" href="/blog/">Read the writing</a>
       </div>
     </div>
@@ -92,7 +92,7 @@ const jsonLd = {
         <p class="eyebrow">How we work</p>
         <h2>Three rules, each one a scar.</h2>
       </div>
-      <span class="aside">rules ← failures</span>
+      <a class="aside" href="/how-we-work/">How we diagnose and price →</a>
     </div>
     <div class="grid">
       {principles.map((p, i) => (
@@ -134,8 +134,8 @@ const jsonLd = {
         senior engineer, not a slide deck.
       </p>
       <div class="cta" data-reveal style="--i:3">
-        <a class="btn primary" href="mailto:djsystems@proton.me?subject=AI%20engineering%20enquiry">Start a conversation <span class="arrow">→</span></a>
-        <a class="btn" href="/services/">See services</a>
+        <a class="btn primary" href="/services/#contact">Start a conversation <span class="arrow">→</span></a>
+        <a class="btn" href="/how-we-work/">How pricing works</a>
       </div>
     </div>
   </section>

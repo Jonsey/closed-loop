@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import ConstraintFlow from '../components/ConstraintFlow.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Diagnose the constraint, not the request.',
+    body: 'Most enquiries arrive as a solution — "we need an AI agent that does X". The request is rarely the problem. A business only grows by removing whatever is constraining it, and at the top level there are two kinds: supply-constrained (work comes in and leaks out — no-shows, no follow-up, a manual step everyone is queued behind) or demand-constrained (the pipe is clean and there is nothing in it). One question each, and then we listen. Sometimes the honest answer is that the fix is a hire, not software. You get told that too.',
+    get: 'A written diagnosis: which constraint, where it sits in your flow, and what breaks first at 10×.',
+  },
+  {
+    n: '02',
+    title: 'Agree one number before any money moves.',
+    body: '"Feel less busy" cannot be measured, so it cannot be delivered. Before a build is scoped we agree a single KPI with you — a baseline today and a target for when the system is in production. Twelve booked appointments a week, not five. Ninety per cent of proposals drafted before a human touches them. That number is the gate criterion in the brief: it is what "done" is checked against, and it is what you hold us to.',
+    get: 'A one-page KPI sheet: the metric, the baseline, the target, and how it will be measured.',
+  },
+  {
+    n: '03',
+    title: 'Price on the value, with the maths shown.',
+    body: 'Not hourly — an hourly rate pays the slower engineer more for the same result, which is the wrong incentive on both sides. Instead we work out what the constraint costs you in a year (hours × rate, missed enquiries × deal value, the launch you keep postponing) and set a fixed fee at 10–20% of the first-year value. You should be able to see a 5–10× return before you say yes. If the budget is smaller than the number, we cut the scope to a V1 — we do not cut the price.',
+    get: 'A fixed-fee V1 scope with the value calculation on the same page as the fee.',
+  },
+];
+
+const honestly = [
+  ['The constraint is people, not software.', 'A service business that is supply-constrained sometimes just needs to hire. We will say so, and we will only propose tooling — screening, scheduling, onboarding — where it genuinely removes the bottleneck.'],
+  ['There is no measurable number.', 'If we cannot agree a KPI with a baseline, we do not take the work. "Productivity" is not a metric, and a build with no number attached is the one that ends in "we are not getting the value we paid for".'],
+  ['The fee is above the budget.', 'The fee does not move; the scope does. A V1 that moves the number is worth more to you than a full build that had its corners cut to hit a figure.'],
+  ['The fee would be under about £2,000.', 'Below that, the value is not there for a proper diagnosis, a build and the evidence that it worked. We will say so and point you at a cheaper route — a hire, an off-the-shelf tool, or doing nothing yet. That is not a discount conversation; it is the method saying no.'],
+  ['The number does not move.', 'That is what the baseline is for. Every engagement is reviewed against the KPI sheet at 30, 60 and 90 days, in writing. If the system is not moving the number you will know before we do the next one.'],
+];
+---
+
+<Base
+  title="How we work — Closed Loop"
+  description="How Closed Loop diagnoses, measures and prices AI engineering work: find the constraint, agree one KPI, price on first-year value. Includes a calculator."
+>
+  <section class="container head">
+    <p class="eyebrow" data-reveal>How we work</p>
+    <h1 data-reveal style="--i:1">Find the constraint.<br />Agree the number.<br />Price the value.</h1>
+    <p class="lede" data-reveal style="--i:2">
+      You should leave the first conversation knowing three things: what is actually
+      broken, which number we are going to move, and what that costs — before any
+      money changes hands. Below is the whole method, and a calculator so you can
+      run the numbers yourself first.
+    </p>
+  </section>
+
+  <section class="container flow" data-reveal="scale" style="--i:2">
+    <div class="scroller"><ConstraintFlow /></div>
+    <p class="caption">Revenue is water. The job is finding the clog, or finding the tap — then proving the pipe carries more than it did.</p>
+  </section>
+
+  <section class="container steps-wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">Three steps</p>
+        <h2>Each one is a gate. None is skippable.</h2>
+      </div>
+      <span class="aside">request → constraint → number → fee</span>
+    </div>
+    <div class="grid">
+      {steps.map((s, i) => (
+        <article class="step" data-reveal style={`--i:${i}`}>
+          <span class="n">{s.n}</span>
+          <h3>{s.title}</h3>
+          <p>{s.body}</p>
+          <p class="get"><span>You get:</span> {s.get}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Calculator ───────────────────────────────────────── -->
+  <section class="container calc-wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">What is it costing you?</p>
+        <h2>Run the numbers before we do.</h2>
+      </div>
+      <span class="aside">runs in your browser · nothing stored · nothing sent</span>
+    </div>
+
+    <div class="calc" data-calculator data-mode="supply" data-reveal style="--i:1">
+      <div class="inputs">
+        <div class="tabs" role="tablist" aria-label="Kind of constraint">
+          <button type="button" role="tab" data-tab="supply" aria-selected="true" id="tab-supply" aria-controls="panel-supply">Supply — a manual process</button>
+          <button type="button" role="tab" data-tab="demand" aria-selected="false" tabindex="-1" id="tab-demand" aria-controls="panel-demand">Demand — enquiries you miss</button>
+        </div>
+
+        <div class="panel" data-panel="supply" role="tabpanel" id="panel-supply" aria-labelledby="tab-supply">
+          <label><span>Hours a week spent on it</span><input type="number" name="hours" value="10" min="0" step="0.5" inputmode="decimal" /></label>
+          <label><span>People doing it</span><input type="number" name="people" value="1" min="0" step="1" inputmode="numeric" /></label>
+          <label><span>Fully-loaded cost per hour (£)</span><input type="number" name="rate" value="40" min="0" step="1" inputmode="decimal" /></label>
+        </div>
+
+        <div class="panel" data-panel="demand" role="tabpanel" id="panel-demand" aria-labelledby="tab-demand" hidden>
+          <label><span>Enquiries missed or dropped a week</span><input type="number" name="missed" value="5" min="0" step="1" inputmode="numeric" /></label>
+          <label><span>Share that would have converted (%)</span><input type="number" name="conversion" value="20" min="0" max="100" step="1" inputmode="numeric" /></label>
+          <label><span>Average value of one deal (£)</span><input type="number" name="deal" value="500" min="0" step="10" inputmode="decimal" /></label>
+        </div>
+
+        <label class="range"><span>How much of that a good fix recovers <output data-out="recovery">70%</output></span><input type="range" name="recovery" value="70" min="10" max="100" step="5" /></label>
+        <p class="note">48 working weeks a year. Estimates, not a quote — the real figures come out of the diagnosis, and they are usually higher, because nobody counts the second-order cost until asked.</p>
+      </div>
+
+      <div class="outputs">
+        <div class="row">
+          <span class="k">What the problem costs you a year</span>
+          <strong class="v" data-out="annual">£0</strong>
+          <code class="w" data-out="working"></code>
+        </div>
+        <div class="row">
+          <span class="k">Value of the fix in year one</span>
+          <strong class="v" data-out="value">£0</strong>
+          <code class="w" data-out="value-working"></code>
+        </div>
+        <div class="row fee">
+          <span class="k">Where a fixed fee for this typically sits</span>
+          <strong class="v" data-out="fee">£0 – £0</strong>
+          <code class="w" data-out="fee-working"></code>
+          <span class="mult">Return in year one: <b data-out="multiple">—</b></span>
+          <span class="floor" data-out="floor"></span>
+        </div>
+        <p class="ask">Ask how we got to the number. We will always walk you through it — that is the point of showing the working.</p>
+      </div>
+
+      <noscript>
+        <div class="noscript">
+          <p><strong>Worked example (the calculator needs JavaScript):</strong> a rep spends 10 hours a week on tickets at £40/hour. That is £400 a week, <strong>£19,200 a year</strong>. A system that takes 70% of it off their desk is worth <strong>£13,440</strong> in year one, and a fixed fee for that build would sit at 10–20% of it: <strong>£1,344 – £2,688</strong>. Return in year one: 5–10×.</p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- ── Honestly ─────────────────────────────────────────── -->
+  <section class="container honest">
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">Honestly</p>
+        <h2>Where this method says no.</h2>
+      </div>
+    </div>
+    <dl class="hlist">
+      {honestly.map(([k, v], i) => (
+        <div data-reveal style={`--i:${i}`}><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="container contact" data-reveal>
+    <ContactForm heading="Bring the problem, not the solution." sub="What is hurting and roughly what it costs you. You will get the diagnosis questions back, and a straight answer on whether it is worth a call — including when it isn’t." />
+  </section>
+</Base>
+
+<script src="../scripts/calculator.ts"></script>
+
+<style>
+  .head { padding-block: clamp(3rem, 8vh, 5.5rem) 1rem; max-width: var(--wide); }
+  .head h1 { font-size: clamp(2.2rem, 5.2vw, 3.8rem); margin-block: 1rem 1.25rem; line-height: 1.08; }
+  .lede { font-size: 1.2rem; max-width: 44rem; margin: 0; }
+
+  .flow { padding-block: 2rem 1rem; }
+  .scroller { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-block: 0.5rem; }
+  .caption { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); margin: 0.75rem 0 0; }
+
+  .steps-wrap { padding-block: clamp(3.5rem, 7vw, 5.5rem) 1rem; }
+  .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface);
+  }
+  .step { padding: 2rem 1.75rem 2.25rem; border-right: 1px solid var(--border); position: relative; transition: background 0.3s; }
+  .step:last-child { border-right: 0; }
+  .step:hover { background: var(--surface-2); }
+  .step::before { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease-out); }
+  .step:hover::before { transform: scaleX(1); }
+  .n { font-family: var(--font-mono); color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; }
+  .step h3 { margin: 0.9rem 0 0.7rem; font-size: 1.3rem; }
+  .step p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  .get { margin-top: 1rem !important; font-family: var(--font-heading); font-size: 0.95rem; color: var(--text) !important; }
+  .get span { color: var(--accent); }
+
+  /* Calculator */
+  .calc-wrap { padding-block: clamp(3.5rem, 7vw, 5.5rem) 1rem; }
+  .calc {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0;
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface);
+  }
+  .inputs { padding: clamp(1.5rem, 3vw, 2.25rem); border-right: 1px solid var(--border); display: grid; gap: 1.1rem; align-content: start; }
+  .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tabs button {
+    font-family: var(--font-heading); font-size: 0.9rem; color: var(--muted);
+    background: transparent; border: 1px solid var(--border-strong); border-radius: 6px; padding: 0.5rem 0.9rem; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+  .tabs button:hover:not([aria-selected="true"]) { color: var(--text-strong); border-color: var(--accent); }
+  .panel { display: grid; gap: 0.9rem; }
+  .panel[hidden] { display: none; }
+  label { display: grid; gap: 0.35rem; font-family: var(--font-heading); font-size: 0.9rem; color: var(--text); }
+  input[type="number"] {
+    font: 1.05rem var(--font-mono); color: var(--text-strong); background: var(--bg); border: 1px solid var(--border-strong);
+    border-radius: 6px; padding: 0.55rem 0.75rem; width: 100%;
+  }
+  input[type="number"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .range output { color: var(--accent); font-family: var(--font-mono); margin-left: 0.4rem; }
+  input[type="range"] { accent-color: var(--accent); width: 100%; }
+  .note { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+
+  .outputs {
+    padding: clamp(1.5rem, 3vw, 2.25rem); display: grid; gap: 1.4rem; align-content: start;
+    background: radial-gradient(60% 80% at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%), var(--surface);
+  }
+  .row { display: grid; gap: 0.25rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .row:last-of-type { border-bottom: 0; }
+  .k { font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+  .v { font-family: var(--font-heading); font-size: clamp(1.6rem, 3vw, 2.3rem); color: var(--text-strong); letter-spacing: -0.01em; line-height: 1.1; }
+  .fee .v { color: var(--accent); }
+  .w { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+  .mult { font-family: var(--font-heading); font-size: 0.92rem; color: var(--text); margin-top: 0.3rem; }
+  .mult b { color: var(--text-strong); }
+  .floor { font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent); margin-top: 0.5rem; }
+  .floor:empty { display: none; }
+  .ask { margin: 0; font-size: 0.95rem; color: var(--text); font-style: italic; }
+  .calc.empty .v { color: var(--muted); }
+  .noscript { grid-column: 1 / -1; padding: 1.5rem 2rem; border-top: 1px solid var(--border); color: var(--text); }
+
+  /* Honestly */
+  .honest { padding-block: clamp(3.5rem, 7vw, 5.5rem) 1rem; }
+  .hlist { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; }
+  .hlist div { padding-top: 1rem; border-top: 1px solid var(--border-strong); }
+  .hlist dt { font-family: var(--font-heading); font-size: 1.15rem; color: var(--text-strong); margin-bottom: 0.4rem; }
+  .hlist dd { margin: 0; color: var(--muted); line-height: 1.6; }
+
+  .contact { padding-block: clamp(3rem, 6vw, 5rem) 2rem; }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    .step { border-right: 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: 0; }
+    .calc { grid-template-columns: 1fr; }
+    .inputs { border-right: 0; border-bottom: 1px solid var(--border); }
+    .hlist { grid-template-columns: 1fr; }
+  }
+</style>

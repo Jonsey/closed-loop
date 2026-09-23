@@ -1,0 +1,8 @@
+# Copy to .dev.vars for `npx wrangler dev`. Never commit .dev.vars.
+DRY_RUN=1
+# Build for local testing with the always-pass site key: PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA npm run build
+# Turnstile test keys (always pass): site key 1x00000000000000000000AA
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+# RESEND_API_KEY=re_...
+# CONTACT_TO=djsystems@proton.me
+# RESEND_SEGMENT_ID=...

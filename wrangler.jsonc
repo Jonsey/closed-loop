@@ -1,8 +1,24 @@
 {
   "name": "closed-loop",
   "compatibility_date": "2026-08-01",
+  "main": "worker/index.ts",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    // Sender for enquiry emails. Must be on a domain verified in Resend.
+    "CONTACT_FROM": "Closed Loop <hello@closed-loop.dev>",
+    // Hostnames a Turnstile token must have been issued for
+    "TURNSTILE_HOSTNAMES": "closed-loop.dev,www.closed-loop.dev"
+  },
+  "observability": { "enabled": true }
+  // Secrets, set with `npx wrangler secret put <NAME>` — never in this file:
+  //   RESEND_API_KEY      Resend API key (Sending access is enough for contact; Full access for the audience)
+  //   TURNSTILE_SECRET    Cloudflare Turnstile widget secret key
+  //   CONTACT_TO          where enquiries land, e.g. djsystems@proton.me
+  //   RESEND_SEGMENT_ID   optional — a Resend Segment id to file subscribers under (contacts are global either way)
+  // Locally these go in .dev.vars (gitignored); DRY_RUN=1 there logs instead of sending.
 }

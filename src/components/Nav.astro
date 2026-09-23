@@ -1,6 +1,7 @@
 ---
 const links = [
   { href: '/blog/', label: 'Writing' },
+  { href: '/how-we-work/', label: 'How we work' },
   { href: '/about/', label: 'About' },
   { href: '/services/', label: 'Services' },
 ];
@@ -20,7 +21,7 @@ const path = Astro.url.pathname;
       {links.map((l) => (
         <a href={l.href} class:list={{ active: path.startsWith(l.href) }}>{l.label}</a>
       ))}
-      <a class="hire" href="mailto:djsystems@proton.me?subject=AI%20engineering%20enquiry">Hire me</a>
+      <a class="hire" href="/services/#contact">Hire us</a>
     </nav>
   </div>
 </header>

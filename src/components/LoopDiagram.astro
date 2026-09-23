@@ -1,22 +1,39 @@
 ---
 /**
- * The site's signature: the task-state loop drawn as a ring. Four states on the
- * ring, one gate that has to be passed, a signal travelling round it. Pure SVG +
- * CSS + SMIL — no runtime dependency.
+ * The site's signature: the actual task-state graph we work in, drawn as a ring.
+ * Four states on the ring (outstanding → branched → review gate → complete), the
+ * edge labels naming what happens on each hop, and the rework edge — gate back
+ * through blocked to outstanding — which is the half most diagrams leave out.
+ * Pure SVG + CSS + SMIL — no runtime dependency.
  */
 interface Props { class?: string }
 const { class: cls } = Astro.props;
+
+const edges = [
+  { x: 351, y: 66, l1: 'agent works it', l2: 'branch + worktree' },
+  { x: 351, y: 354, l1: 'diff + evidence', l2: 'tests, screenshots' },
+  { x: 69, y: 354, l1: 'human reviews', l2: 'merge, or send back' },
+  { x: 69, y: 66, l1: 'next task', l2: 'state = folder' },
+];
 ---
 
 <svg class:list={['loop', cls]} viewBox="0 0 420 420" role="img" aria-labelledby="loop-title" aria-describedby="loop-desc">
   <title id="loop-title">The closed loop</title>
-  <desc id="loop-desc">A ring of four states — outstanding, branched, verified, complete — with a review gate the signal must pass before the loop closes.</desc>
+  <desc id="loop-desc">
+    The task-state graph: a task moves outstanding → branched → review gate → complete,
+    and the gate either passes it to complete or sends it back through blocked to
+    outstanding. Every state is a folder on disk.
+  </desc>
   <defs>
     <path id="ring" d="M 210 40 A 170 170 0 1 1 209.9 40" />
+    <path id="rework" d="M 210 330 A 120 120 0 0 0 210 90" />
     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35" />
       <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
     </radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--border-strong)" />
+    </marker>
   </defs>
 
   <!-- soft glow behind ring -->
@@ -33,6 +50,22 @@ const { class: cls } = Astro.props;
     {Array.from({ length: 36 }).map((_, i) => (
       <line x1="210" y1="60" x2="210" y2={i % 9 === 0 ? 70 : 66} transform={`rotate(${i * 10} 210 210)`} />
     ))}
+  </g>
+
+  <!-- rework edge: the gate sending work back -->
+  <g class="rework">
+    <use href="#rework" fill="none" stroke="var(--border-strong)" stroke-width="1.5"
+         stroke-dasharray="5 5" marker-end="url(#arrow)" />
+    <g font-family="var(--font-mono)" font-size="9" text-anchor="middle">
+      <circle cx="330" cy="210" r="5" fill="var(--bg)" stroke="var(--border-strong)" stroke-width="1.5" />
+      <text x="330" y="196" fill="var(--muted)">blocked</text>
+      <text x="250" y="100" fill="var(--muted)">changes requested</text>
+    </g>
+    <circle class="rsignal" r="3.5" fill="var(--border-strong)">
+      <animateMotion dur="4.5s" repeatCount="indefinite" begin="3.2s">
+        <mpath href="#rework" />
+      </animateMotion>
+    </circle>
   </g>
 
   <!-- state nodes -->
@@ -53,6 +86,16 @@ const { class: cls } = Astro.props;
       <circle cx="40" cy="210" r="7" fill="var(--accent)" stroke="var(--accent)" stroke-width="2" />
       <text x="40" y="240" fill="var(--muted)">complete</text>
     </g>
+  </g>
+
+  <!-- what happens on each hop -->
+  <g class="edges" font-family="var(--font-mono)" font-size="9" text-anchor="middle">
+    {edges.map((e, i) => (
+      <g class="edge" style={`--d: ${2.4 + i * 0.18}s`}>
+        <text x={e.x} y={e.y} fill="var(--muted)">{e.l1}</text>
+        <text x={e.x} y={e.y + 12} fill="var(--border-strong)">{e.l2}</text>
+      </g>
+    ))}
   </g>
 
   <!-- travelling signal -->
@@ -86,17 +129,21 @@ const { class: cls } = Astro.props;
   .glowc { opacity: 0; animation: fade 1.6s var(--ease-out) 1.4s forwards; }
   .ticks { transform-origin: 210px 210px; animation: spin 90s linear infinite; }
   .node { opacity: 0; transform: scale(0.6); transform-box: fill-box; transform-origin: center; animation: pop 0.7s var(--ease-out) var(--d) forwards; }
+  .edge { opacity: 0; animation: fade 0.8s var(--ease-out) var(--d) forwards; }
+  .rework { opacity: 0; animation: fade 0.9s var(--ease-out) 3s forwards; }
+  .rework use { stroke-dasharray: 5 5; animation: flow 1.2s linear infinite; }
   .signal { opacity: 0; animation: fade 0.6s ease 2.4s forwards; }
   .centre { opacity: 0; animation: fade 1s var(--ease-out) 1.8s forwards; }
 
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes fade { to { opacity: 1; } }
+  @keyframes flow { to { stroke-dashoffset: -10; } }
   @keyframes spin { to { transform: rotate(360deg); } }
   @keyframes pop { to { opacity: 1; transform: scale(1); } }
 
   @media (prefers-reduced-motion: reduce) {
     .draw { stroke-dashoffset: 0; animation: none; }
-    .glowc, .node, .signal, .centre { opacity: 1; transform: none; animation: none; }
-    .ticks { animation: none; }
+    .glowc, .node, .edge, .rework, .signal, .centre { opacity: 1; transform: none; animation: none; }
+    .rework use, .ticks { animation: none; }
   }
 </style>

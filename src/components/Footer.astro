@@ -1,5 +1,6 @@
 ---
 const year = new Date().getFullYear();
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '1x00000000000000000000AA';
 ---
 
 <footer>
@@ -7,6 +8,17 @@ const year = new Date().getFullYear();
     <div class="brand">
       <p class="eyebrow">Closed Loop</p>
       <p class="line">AI systems that close their own loop.<br />Built, verified, handed over.</p>
+      <form class="subscribe" data-form action="/api/subscribe" method="post" data-success="You're on the list. New articles only — no drip campaigns." novalidate>
+        <label for="sub-email">New articles by email</label>
+        <div class="row">
+          <input id="sub-email" type="email" name="email" required maxlength="200" placeholder="you@company.com" autocomplete="email" inputmode="email" />
+          <button class="btn" type="submit">Subscribe</button>
+        </div>
+        <label class="hp" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <div class="cf-turnstile" data-sitekey={siteKey} data-action="subscribe" data-theme="dark" data-size="flexible" data-appearance="interaction-only"></div>
+        <p class="status" data-status role="status" aria-live="polite"></p>
+        <p class="tiny">One email per article, unsubscribe in every one. Nothing else is done with the address.</p>
+      </form>
     </div>
     <div class="cols">
       <div>
@@ -19,7 +31,7 @@ const year = new Date().getFullYear();
         <p class="head">Elsewhere</p>
         <a href="/rss.xml">RSS</a>
         <a href="/llms.txt">llms.txt</a>
-        <a href="mailto:djsystems@proton.me">Email</a>
+        <a href="/services/#contact">Contact</a>
       </div>
     </div>
   </div>
@@ -49,6 +61,21 @@ const year = new Date().getFullYear();
     margin: 0.75rem 0 0;
     letter-spacing: -0.01em;
   }
+  .subscribe { margin-top: 1.5rem; display: grid; gap: 0.5rem; max-width: 26rem; }
+  .subscribe > label { font-family: var(--font-heading); font-size: 0.9rem; color: var(--text); }
+  .subscribe .row { display: flex; gap: 0.5rem; }
+  .subscribe input[type="email"] {
+    flex: 1; min-width: 0; font: 0.95rem var(--font-body); color: var(--text-strong); background: var(--bg);
+    border: 1px solid var(--border-strong); border-radius: 6px; padding: 0.55rem 0.75rem;
+  }
+  .subscribe input:focus { outline: none; border-color: var(--accent); }
+  .subscribe .btn { --pad: 0.55rem 1rem; font-size: 0.9rem; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .status { margin: 0; font-family: var(--font-heading); font-size: 0.88rem; min-height: 1.2em; }
+  .status[data-kind="ok"] { color: var(--accent); }
+  .status[data-kind="error"] { color: #f08e8e; }
+  .subscribe.sent .row, .subscribe.sent .cf-turnstile { display: none; }
+  .tiny { margin: 0; font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   .cols a {
     display: block;

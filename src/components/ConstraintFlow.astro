@@ -1,0 +1,170 @@
+---
+/**
+ * How an engagement is diagnosed and priced, drawn as a flow.
+ * Left: the pipe. Revenue is water. A business is either supply-constrained (water in,
+ * clog in the middle, leaks before the end) or demand-constrained (clean pipe, no water).
+ * Right: the constraint → one KPI → what it costs per year → a fixed fee, and the edge
+ * that comes back — there is always a next constraint. That return edge is the loop.
+ * Pure SVG + CSS + SMIL, same recipe as LoopDiagram — no runtime dependency.
+ */
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+
+const steps = [
+  { x: 470, label: 'the constraint', sub: 'what breaks first' },
+  { x: 630, label: 'one KPI', sub: 'baseline → target' },
+  { x: 790, label: '£ per year', sub: 'cost of the problem' },
+  { x: 950, label: 'fixed fee', sub: '10–20% of year one' },
+];
+---
+
+<svg class:list={['flow', cls]} viewBox="0 0 1040 360" role="img" aria-labelledby="flow-title" aria-describedby="flow-desc">
+  <title id="flow-title">How Closed Loop diagnoses and prices work</title>
+  <desc id="flow-desc">
+    Start with the question "what is your problem?". A business is either supply-constrained — revenue comes in
+    but leaks out of a clogged pipe — or demand-constrained — the pipe is clean but empty. One diagnostic question
+    each finds the constraint. From the constraint we agree one KPI with a baseline and target, work out what the
+    problem costs per year, and set a fixed fee at ten to twenty per cent of that first-year value. When the
+    constraint is removed the next one appears, and the loop runs again.
+  </desc>
+  <defs>
+    <marker id="cf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--border-strong)" />
+    </marker>
+    <marker id="cf-arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
+    </marker>
+    <clipPath id="pipe-a"><rect x="150" y="96" width="220" height="28" rx="14" /></clipPath>
+    <clipPath id="pipe-b"><rect x="150" y="236" width="220" height="28" rx="14" /></clipPath>
+    <path id="cf-main" d="M 470 180 H 950" />
+    <path id="cf-return" d="M 950 200 C 950 300, 470 300, 470 200" />
+  </defs>
+
+  <!-- the question -->
+  <g class="q" font-family="var(--font-heading)" text-anchor="middle">
+    <rect x="10" y="150" width="120" height="60" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2" />
+    <text x="70" y="176" fill="var(--text-strong)" font-size="14" font-weight="700">What's your</text>
+    <text x="70" y="194" fill="var(--text-strong)" font-size="14" font-weight="700">problem?</text>
+  </g>
+
+  <!-- branches to the two pipes -->
+  <g class="branch" fill="none" stroke="var(--border-strong)" stroke-width="1.5">
+    <path d="M 130 170 C 145 170, 135 110, 150 110" marker-end="url(#cf-arrow)" />
+    <path d="M 130 190 C 145 190, 135 250, 150 250" marker-end="url(#cf-arrow)" />
+  </g>
+
+  <!-- pipe A: supply-constrained — water in, clog, leak -->
+  <g class="pipe pa">
+    <text x="150" y="80" font-family="var(--font-mono)" font-size="10" fill="var(--accent)" letter-spacing="1.5">SUPPLY-CONSTRAINED</text>
+    <rect x="150" y="96" width="220" height="28" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1.5" />
+    <g clip-path="url(#pipe-a)">
+      <rect class="water wa" x="150" y="96" width="120" height="28" fill="var(--accent)" opacity="0.55" />
+      <g class="ripple" fill="var(--accent-ink)" opacity="0.35">
+        <circle cx="170" cy="110" r="2" /><circle cx="200" cy="106" r="2" /><circle cx="230" cy="114" r="2" /><circle cx="255" cy="108" r="2" />
+      </g>
+    </g>
+    <!-- the clog -->
+    <g class="clog">
+      <circle cx="272" cy="110" r="11" fill="var(--bg)" stroke="var(--text-strong)" stroke-width="2" />
+      <line x1="266" y1="104" x2="278" y2="116" stroke="var(--text-strong)" stroke-width="2" />
+      <line x1="278" y1="104" x2="266" y2="116" stroke="var(--text-strong)" stroke-width="2" />
+    </g>
+    <!-- the leak -->
+    <g class="leak" fill="var(--accent)">
+      <circle cx="255" cy="132" r="2.5"><animate attributeName="cy" values="126;150" dur="1.4s" repeatCount="indefinite" /><animate attributeName="opacity" values="0.8;0" dur="1.4s" repeatCount="indefinite" /></circle>
+      <circle cx="262" cy="132" r="2"><animate attributeName="cy" values="126;150" dur="1.4s" begin="0.6s" repeatCount="indefinite" /><animate attributeName="opacity" values="0.8;0" dur="1.4s" begin="0.6s" repeatCount="indefinite" /></circle>
+    </g>
+    <text x="150" y="146" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">plenty coming in, leaking before the end</text>
+    <text x="150" y="160" font-family="var(--font-body)" font-style="italic" font-size="11" fill="var(--text)">“10× the business tomorrow — what breaks first?”</text>
+  </g>
+
+  <!-- pipe B: demand-constrained — clean pipe, no water -->
+  <g class="pipe pb">
+    <text x="150" y="220" font-family="var(--font-mono)" font-size="10" fill="var(--accent)" letter-spacing="1.5">DEMAND-CONSTRAINED</text>
+    <rect x="150" y="236" width="220" height="28" rx="14" fill="var(--surface-2)" stroke="var(--border-strong)" stroke-width="1.5" />
+    <g clip-path="url(#pipe-b)">
+      <rect class="water wb" x="150" y="236" width="18" height="28" fill="var(--accent)" opacity="0.55" />
+    </g>
+    <text x="150" y="286" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">clean pipe, nothing in it</text>
+    <text x="150" y="300" font-family="var(--font-body)" font-style="italic" font-size="11" fill="var(--text)">“what would you do to 10× what comes in?”</text>
+  </g>
+
+  <!-- merge into the constraint -->
+  <g class="branch" fill="none" stroke="var(--border-strong)" stroke-width="1.5">
+    <path d="M 372 110 C 400 110, 420 180, 456 180" />
+    <path d="M 372 250 C 400 250, 420 180, 456 180" marker-end="url(#cf-arrow)" />
+  </g>
+
+  <!-- main line -->
+  <use href="#cf-main" class="draw" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- steps -->
+  <g class="steps" text-anchor="middle">
+    {steps.map((s, i) => (
+      <g class="node" style={`--d: ${1.2 + i * 0.35}s`}>
+        {i === 3 ? (
+          <rect x={s.x - 10} y="170" width="20" height="20" rx="3" fill="var(--bg)" stroke="var(--accent)" stroke-width="2" transform={`rotate(45 ${s.x} 180)`} />
+        ) : (
+          <circle cx={s.x} cy="180" r="8" fill={i === 0 ? 'var(--accent)' : 'var(--bg)'} stroke="var(--accent)" stroke-width="2" />
+        )}
+        <text x={s.x} y="152" fill="var(--text-strong)" font-family="var(--font-heading)" font-size="14" font-weight="700">{s.label}</text>
+        <text x={s.x} y="214" fill="var(--muted)" font-family="var(--font-mono)" font-size="9.5">{s.sub}</text>
+      </g>
+    ))}
+  </g>
+
+  <!-- travelling signal on the main line -->
+  <g class="signal">
+    <circle r="5" fill="var(--text-strong)">
+      <animateMotion dur="6s" repeatCount="indefinite" begin="2.6s"><mpath href="#cf-main" /></animateMotion>
+    </circle>
+    <circle r="12" fill="var(--accent)" opacity="0.25">
+      <animateMotion dur="6s" repeatCount="indefinite" begin="2.6s"><mpath href="#cf-main" /></animateMotion>
+    </circle>
+  </g>
+
+  <!-- return edge: the next constraint -->
+  <g class="ret">
+    <use href="#cf-return" fill="none" stroke="var(--border-strong)" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#cf-arrow)" />
+    <text x="710" y="268" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">remove it → the next constraint appears → go again</text>
+    <circle r="3.5" fill="var(--border-strong)">
+      <animateMotion dur="5s" repeatCount="indefinite" begin="4s"><mpath href="#cf-return" /></animateMotion>
+    </circle>
+  </g>
+</svg>
+
+<style>
+  .flow { width: 100%; height: auto; display: block; overflow: visible; }
+  .q { opacity: 0; transform: scale(0.8); transform-box: fill-box; transform-origin: center; animation: pop 0.7s var(--ease-out) 0.2s forwards; }
+  .branch { opacity: 0; animation: fade 0.8s var(--ease-out) 0.6s forwards; }
+  .pipe { opacity: 0; animation: fade 0.8s var(--ease-out) forwards; }
+  .pa { animation-delay: 0.8s; }
+  .pb { animation-delay: 1.0s; }
+  .water.wa { animation: surge 3s var(--ease-in-out) infinite alternate; }
+  .water.wb { animation: trickle 4s var(--ease-in-out) infinite alternate; }
+  .ripple { animation: drift 2.4s linear infinite; }
+  .draw { stroke-dasharray: 480; stroke-dashoffset: 480; animation: draw 1.6s var(--ease-in-out) 1.1s forwards; }
+  .node { opacity: 0; transform: scale(0.6); transform-box: fill-box; transform-origin: center; animation: pop 0.7s var(--ease-out) var(--d) forwards; }
+  .signal { opacity: 0; animation: fade 0.6s ease 2.6s forwards; }
+  .ret { opacity: 0; animation: fade 0.9s var(--ease-out) 3.2s forwards; }
+  .ret use { animation: flow 1.2s linear infinite; }
+
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes pop { to { opacity: 1; transform: scale(1); } }
+  @keyframes flow { to { stroke-dashoffset: -10; } }
+  @keyframes surge { from { width: 100px; } to { width: 122px; } }
+  @keyframes trickle { from { width: 10px; } to { width: 26px; } }
+  @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
+
+  @media (max-width: 700px) {
+    .flow { min-width: 720px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draw { stroke-dashoffset: 0; animation: none; }
+    .q, .branch, .pipe, .node, .ret { opacity: 1; transform: none; animation: none; }
+    .signal, .ret circle, .leak { display: none; }
+    .water, .ripple, .ret use { animation: none; }
+  }
+</style>
