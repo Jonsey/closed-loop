@@ -72,6 +72,6 @@ const ogImage = new URL(ogImagePath, Astro.site);
     <Footer />
     <script src="../scripts/motion.ts"></script>
     <script src="../scripts/forms.ts"></script>
-    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileReady" async defer></script>
   </body>
 </html>
