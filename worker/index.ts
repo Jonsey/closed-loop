@@ -110,7 +110,7 @@ async function subscribe(request: Request, env: Env): Promise<Response> {
   if (!(await verifyTurnstile(env, token, request.headers.get('cf-connecting-ip'), 'subscribe'))) return json({ ok: false, error: 'The anti-spam check did not pass.' }, 400);
   // Resend contacts are global; a segment is optional grouping for broadcasts.
   const payload: Record<string, unknown> = { email, unsubscribed: false };
-  if (env.RESEND_SEGMENT_ID) payload.segments = [env.RESEND_SEGMENT_ID];
+  if (env.RESEND_SEGMENT_ID) payload.segments = [{ id: env.RESEND_SEGMENT_ID }]; // array of objects, not ids
   const r = await resend(env, '/contacts', payload);
   if (!r.ok && r.status !== 409) {
     console.error('resend contact failed', r.status, await r.text());
