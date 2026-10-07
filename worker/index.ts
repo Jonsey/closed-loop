@@ -87,7 +87,10 @@ async function contact(request: Request, env: Env): Promise<Response> {
   const from = env.CONTACT_FROM ?? 'Closed Loop <hello@closed-loop.dev>';
   if (!to && env.DRY_RUN !== '1') return json({ ok: false, error: 'Contact is not configured yet — email us directly.' }, 500);
 
-  const subject = `Enquiry from ${name}${cost ? ` — ${cost}` : ''}`;
+  // The site is served on more than one domain; flag enquiries that didn't come through the main one.
+  const host = new URL(request.url).hostname;
+  const via = host === 'closed-loop.dev' ? '' : ` (via ${host})`;
+  const subject = `Enquiry from ${name}${cost ? ` — ${cost}` : ''}${via}`;
   const text = [`From: ${name} <${email}>`, cost ? `What it costs them: ${cost}` : '', '', message].filter((l) => l !== '').join('\n');
   const html = `<p><strong>From:</strong> ${esc(name)} &lt;${esc(email)}&gt;</p>${cost ? `<p><strong>What it costs them:</strong> ${esc(cost)}</p>` : ''}<p style="white-space:pre-wrap">${esc(message)}</p>`;
 

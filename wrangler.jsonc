@@ -11,8 +11,9 @@
   "vars": {
     // Sender for enquiry emails. Must be on a domain verified in Resend.
     "CONTACT_FROM": "Closed Loop <hello@closed-loop.dev>",
-    // Hostnames a Turnstile token must have been issued for
-    "TURNSTILE_HOSTNAMES": "closed-loop.dev,www.closed-loop.dev"
+    // Hostnames a Turnstile token must have been issued for. djsystems.co.uk is a duplicate of
+    // the site (canonical tags still point at closed-loop.dev); the Turnstile widget allows both.
+    "TURNSTILE_HOSTNAMES": "closed-loop.dev,www.closed-loop.dev,djsystems.co.uk,www.djsystems.co.uk"
   },
   "observability": { "enabled": true }
   // Secrets, set with `npx wrangler secret put <NAME>` — never in this file:
