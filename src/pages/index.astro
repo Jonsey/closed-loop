@@ -32,7 +32,7 @@ const jsonLd = {
   '@type': 'ProfessionalService',
   name: 'Closed Loop',
   url: Astro.site?.href,
-  description: 'AI engineering consultancy — agentic systems, Claude Code enablement, and AI infrastructure, evidenced.',
+  description: 'AI engineering consultancy — agentic systems, Claude Code enablement, AI infrastructure, and AI implementation security audits, evidenced.',
   email: 'hello@closed-loop.dev',
   address: { '@type': 'PostalAddress', addressLocality: 'Sheffield', addressCountry: 'GB' },
   areaServed: 'Remote',
@@ -42,7 +42,7 @@ const jsonLd = {
 
 <Base
   title="Closed Loop — AI engineering, evidenced"
-  description="Closed Loop is an AI engineering consultancy building agentic systems, Claude Code workflows, and AI infrastructure that have to be right. Every method ran for real before it was written up."
+  description="Closed Loop is an AI engineering consultancy building agentic systems, Claude Code workflows, AI infrastructure and security audits of AI-built systems that have to be right. Every method ran for real before it was written up."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
@@ -56,8 +56,9 @@ const jsonLd = {
       <p class="lede" data-reveal style="--i:2">
         Closed Loop designs and builds production AI systems for businesses that
         need them to be right: autonomous dev loops on Claude Code, multi-agent
-        pipelines, and the cloud infrastructure underneath them. Every method we
-        sell ran for real before it was written up. No thought experiments —
+        pipelines, the cloud infrastructure underneath them, and the security audits
+        that prove what AI built is safe to ship. Every method we sell ran for real
+        before it was written up. No thought experiments —
         <em>scars with documentation</em>.
       </p>
       <div class="cta" data-reveal style="--i:3">
@@ -129,9 +130,10 @@ const jsonLd = {
       <p class="eyebrow" data-reveal>Available for remote engagements</p>
       <h2 data-reveal style="--i:1">Need an AI system that has to be right,<br />not just impressive?</h2>
       <p class="sub" data-reveal style="--i:2">
-        Agentic system design, Claude Code enablement for engineering teams, and the
-        infrastructure that keeps LLM products production-grade — delivered by a
-        senior engineer, not a slide deck.
+        Agentic system design, Claude Code enablement for engineering teams, the
+        infrastructure that keeps LLM products production-grade, and security audits
+        of AI-built and AI-powered systems — delivered by a senior engineer, not a
+        slide deck.
       </p>
       <div class="cta" data-reveal style="--i:3">
         <a class="btn primary" href="/services/#contact">Start a conversation <span class="arrow">→</span></a>

@@ -24,6 +24,13 @@ const offers = [
     evidence: { label: 'Many years of production delivery in regulated industries, plus the systems documented here', href: '/about/' },
     fit: 'Products past the prototype, where the next bug is a customer-facing one.',
   },
+  {
+    n: '04',
+    title: 'AI implementation security audits',
+    body: 'A security review of what AI built, and of the AI system itself. Two surfaces: generated code — auth and access control, injection, secrets handling, exposed endpoints, dependency and supply-chain risk in an app assembled by Lovable, Bolt, Cursor or Claude Code; and the agentic layer — prompt injection, tool permissions and blast radius, data egress, and what an agent can reach when a prompt turns hostile. Automated first pass through our own audit tooling, then manual verification of every finding, ending in a fix, refactor or rebuild call. Written authorisation required before any testing starts.',
+    evidence: { label: 'CosmWasm/Go audit work with a custom multi-agent audit harness, and paid bounty findings', href: '/about/' },
+    fit: 'Teams shipping AI-written or AI-powered code to production that has never had a security review.',
+  },
 ];
 
 const how = [
@@ -36,7 +43,7 @@ const how = [
 
 <Base
   title="Services — Closed Loop"
-  description="Closed Loop services: agentic system design and build, Claude Code enablement for teams, and AI infrastructure consulting."
+  description="Closed Loop services: agentic system design and build, Claude Code enablement for teams, AI infrastructure consulting, and AI implementation security audits."
 >
   <section class="container head">
     <p class="eyebrow" data-reveal>Services</p>
