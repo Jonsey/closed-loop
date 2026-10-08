@@ -9,3 +9,15 @@ export const TURNSTILE_SITE_KEY: string = import.meta.env.PUBLIC_TURNSTILE_SITE_
 
 /** The published contact address. Email Routing forwards it. */
 export const CONTACT_EMAIL = 'hello@closed-loop.dev';
+
+/**
+ * The company Closed Loop trades through. A company's website must show its registered name,
+ * number, place of registration and registered office (Names and Trading Disclosures Regs 2015).
+ */
+export const COMPANY = {
+  name: 'DJ Systems Ltd',
+  number: '16805375',
+  registeredIn: 'England and Wales',
+  registeredOffice: '20 Wenlock Road, London, N1 7GU',
+  site: 'https://djsystems.co.uk',
+};

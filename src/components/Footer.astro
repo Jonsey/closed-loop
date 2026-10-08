@@ -1,6 +1,6 @@
 ---
 const year = new Date().getFullYear();
-import { TURNSTILE_SITE_KEY as siteKey } from '../config';
+import { TURNSTILE_SITE_KEY as siteKey, COMPANY } from '../config';
 ---
 
 <footer>
@@ -38,6 +38,10 @@ import { TURNSTILE_SITE_KEY as siteKey } from '../config';
   <div class="container bottom">
     <span>© {year} Closed Loop — AI engineering, Sheffield, UK</span>
     <span class="mono">Astro · static · no trackers</span>
+  </div>
+  <div class="container legal">
+    Closed Loop is a trading name of <a href={COMPANY.site}>{COMPANY.name}</a>, registered in {COMPANY.registeredIn}, company no. {COMPANY.number}.
+    Registered office: {COMPANY.registeredOffice}.
   </div>
 </footer>
 
@@ -99,6 +103,8 @@ import { TURNSTILE_SITE_KEY as siteKey } from '../config';
     color: var(--muted);
   }
   .mono { font-family: var(--font-mono); font-size: 0.75rem; }
+  .legal { padding-block: 0 1.75rem; margin-top: -0.75rem; font-family: var(--font-mono); font-size: 0.7rem; line-height: 1.6; color: var(--muted); }
+  .legal a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   @media (max-width: 640px) {
     .top { grid-template-columns: 1fr; }
   }
