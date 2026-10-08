@@ -15,6 +15,13 @@
     // the site (canonical tags still point at closed-loop.dev); the Turnstile widget allows both.
     "TURNSTILE_HOSTNAMES": "closed-loop.dev,www.closed-loop.dev,djsystems.co.uk,www.djsystems.co.uk"
   },
+  // Custom domains. wrangler deploy treats this list as the complete set (override_scope),
+  // so removing one here detaches it from the Worker on the next deploy.
+  "routes": [
+    { "pattern": "closed-loop.dev", "custom_domain": true },
+    { "pattern": "djsystems.co.uk", "custom_domain": true },
+    { "pattern": "www.djsystems.co.uk", "custom_domain": true }
+  ],
   "observability": { "enabled": true }
   // Secrets, set with `npx wrangler secret put <NAME>` — never in this file:
   //   RESEND_API_KEY      Resend API key (Sending access is enough for contact; Full access for the audience)
