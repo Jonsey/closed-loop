@@ -11,16 +11,15 @@
   "vars": {
     // Sender for enquiry emails. Must be on a domain verified in Resend.
     "CONTACT_FROM": "Closed Loop <hello@closed-loop.dev>",
-    // Hostnames a Turnstile token must have been issued for. djsystems.co.uk is a duplicate of
-    // the site (canonical tags still point at closed-loop.dev); the Turnstile widget allows both.
+    // Hostnames a Turnstile token must have been issued for. djsystems.co.uk's contact form is
+    // handed to this Worker over a service binding, so its hostnames stay here.
     "TURNSTILE_HOSTNAMES": "closed-loop.dev,www.closed-loop.dev,djsystems.co.uk,www.djsystems.co.uk"
   },
   // Custom domains. wrangler deploy treats this list as the complete set (override_scope),
-  // so removing one here detaches it from the Worker on the next deploy.
+  // and CI (Workers Builds, on push) auto-overrides conflicts. djsystems.co.uk + www belong to
+  // the djsystems Worker (~/projects/apps/djsystems) - never list them here, or a push takes them back.
   "routes": [
-    { "pattern": "closed-loop.dev", "custom_domain": true },
-    { "pattern": "djsystems.co.uk", "custom_domain": true },
-    { "pattern": "www.djsystems.co.uk", "custom_domain": true }
+    { "pattern": "closed-loop.dev", "custom_domain": true }
   ],
   "observability": { "enabled": true }
   // Secrets, set with `npx wrangler secret put <NAME>` — never in this file:
